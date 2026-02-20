@@ -1,0 +1,1650 @@
+{
+ "ABERFOYLE PARK": {
+  "lat": -35.07061,
+  "lng": 138.60096
+ },
+ "ADELAIDE": {
+  "lat": -34.92862,
+  "lng": 138.60063
+ },
+ "ALBERT PARK": {
+  "lat": -34.87646,
+  "lng": 138.52184
+ },
+ "ALBERTON": {
+  "lat": -34.85887,
+  "lng": 138.51631
+ },
+ "ALDGATE": {
+  "lat": -35.01693,
+  "lng": 138.73998
+ },
+ "ALDINGA": {
+  "lat": -35.27061,
+  "lng": 138.48358
+ },
+ "ALDINGA BEACH": {
+  "lat": -35.29315,
+  "lng": 138.45869
+ },
+ "ALLENBY GARDENS": {
+  "lat": -34.90194,
+  "lng": 138.55464
+ },
+ "ANDREWS FARM": {
+  "lat": -34.67501,
+  "lng": 138.65947
+ },
+ "ANGLE PARK": {
+  "lat": -34.85614,
+  "lng": 138.56094
+ },
+ "ANGLE VALE": {
+  "lat": -34.63845,
+  "lng": 138.6497
+ },
+ "ASCOT PARK": {
+  "lat": -34.98812,
+  "lng": 138.561
+ },
+ "ASHFORD": {
+  "lat": -34.94842,
+  "lng": 138.57437
+ },
+ "ASHTON": {
+  "lat": -34.94108,
+  "lng": 138.73611
+ },
+ "ATHELSTONE": {
+  "lat": -34.87135,
+  "lng": 138.70552
+ },
+ "ATHOL PARK": {
+  "lat": -34.85606,
+  "lng": 138.54283
+ },
+ "AULDANA": {
+  "lat": -34.91791,
+  "lng": 138.68669
+ },
+ "BALHANNAH": {
+  "lat": -34.99472,
+  "lng": 138.82443
+ },
+ "BANKSIA PARK": {
+  "lat": -34.81043,
+  "lng": 138.7272
+ },
+ "BASKET RANGE": {
+  "lat": -34.93527,
+  "lng": 138.77338
+ },
+ "BEAUMONT": {
+  "lat": -34.94992,
+  "lng": 138.659
+ },
+ "BEDFORD PARK": {
+  "lat": -35.02347,
+  "lng": 138.56975
+ },
+ "BELAIR": {
+  "lat": -35.00632,
+  "lng": 138.64367
+ },
+ "BELLEVUE HEIGHTS": {
+  "lat": -35.0305,
+  "lng": 138.58347
+ },
+ "BEULAH PARK": {
+  "lat": -34.91766,
+  "lng": 138.6452
+ },
+ "BEVERLEY": {
+  "lat": -34.89509,
+  "lng": 138.54635
+ },
+ "BIRDWOOD": {
+  "lat": -34.81782,
+  "lng": 138.97651
+ },
+ "BIRKENHEAD": {
+  "lat": -34.83659,
+  "lng": 138.49942
+ },
+ "BLACK FOREST": {
+  "lat": -34.96026,
+  "lng": 138.57669
+ },
+ "BLACKWOOD": {
+  "lat": -35.02251,
+  "lng": 138.61294
+ },
+ "BLAIR ATHOL": {
+  "lat": -34.85925,
+  "lng": 138.59655
+ },
+ "BLAKEVIEW": {
+  "lat": -34.67579,
+  "lng": 138.71021
+ },
+ "BOWDEN": {
+  "lat": -34.90319,
+  "lng": 138.5798
+ },
+ "BRADBURY": {
+  "lat": -35.07135,
+  "lng": 138.72577
+ },
+ "BRAHMA LODGE": {
+  "lat": -34.77589,
+  "lng": 138.65308
+ },
+ "BRIDGEWATER": {
+  "lat": -35.01519,
+  "lng": 138.76745
+ },
+ "BRIGHTON": {
+  "lat": -35.01842,
+  "lng": 138.52277
+ },
+ "BROADVIEW": {
+  "lat": -34.87582,
+  "lng": 138.61478
+ },
+ "BROMPTON": {
+  "lat": -34.89839,
+  "lng": 138.57568
+ },
+ "BROOKLYN PARK": {
+  "lat": -34.9301,
+  "lng": 138.54477
+ },
+ "BURNSIDE": {
+  "lat": -34.9401,
+  "lng": 138.66654
+ },
+ "BURTON": {
+  "lat": -34.73704,
+  "lng": 138.60103
+ },
+ "CALLINGTON": {
+  "lat": -35.11451,
+  "lng": 139.04624
+ },
+ "CAMDEN PARK": {
+  "lat": -34.96713,
+  "lng": 138.54146
+ },
+ "CAMPBELLTOWN": {
+  "lat": -34.88143,
+  "lng": 138.66057
+ },
+ "CAREY GULLY": {
+  "lat": -34.9677,
+  "lng": 138.76932
+ },
+ "CHANDLERS HILL": {
+  "lat": -35.08634,
+  "lng": 138.61686
+ },
+ "CHARLESTON": {
+  "lat": -34.91395,
+  "lng": 138.92291
+ },
+ "CHELTENHAM": {
+  "lat": -34.86754,
+  "lng": 138.52429
+ },
+ "CHERRYVILLE": {
+  "lat": -34.90867,
+  "lng": 138.78022
+ },
+ "CHRISTIE DOWNS": {
+  "lat": -35.13007,
+  "lng": 138.49646
+ },
+ "CHRISTIES BEACH": {
+  "lat": -35.13481,
+  "lng": 138.47774
+ },
+ "CLAPHAM": {
+  "lat": -34.98999,
+  "lng": 138.60456
+ },
+ "CLARENCE GARDENS": {
+  "lat": -34.97247,
+  "lng": 138.57778
+ },
+ "CLARENCE PARK": {
+  "lat": -34.96406,
+  "lng": 138.58356
+ },
+ "CLARENDON": {
+  "lat": -35.11552,
+  "lng": 138.62996
+ },
+ "CLEARVIEW": {
+  "lat": -34.85745,
+  "lng": 138.61393
+ },
+ "CLOVELLY PARK": {
+  "lat": -34.99829,
+  "lng": 138.5707
+ },
+ "COLLEGE PARK": {
+  "lat": -34.91163,
+  "lng": 138.61988
+ },
+ "COLLINSWOOD": {
+  "lat": -34.88713,
+  "lng": 138.61238
+ },
+ "COLONEL LIGHT GARDENS": {
+  "lat": -34.98359,
+  "lng": 138.59469
+ },
+ "COROMANDEL VALLEY": {
+  "lat": -35.04492,
+  "lng": 138.6238
+ },
+ "COWANDILLA": {
+  "lat": -34.93246,
+  "lng": 138.55693
+ },
+ "CRAFERS": {
+  "lat": -34.98829,
+  "lng": 138.71441
+ },
+ "CRAFERS WEST": {
+  "lat": -34.99541,
+  "lng": 138.68239
+ },
+ "CRAIGBURN FARM": {
+  "lat": -35.04046,
+  "lng": 138.60484
+ },
+ "CRAIGMORE": {
+  "lat": -34.70083,
+  "lng": 138.70968
+ },
+ "CROYDON": {
+  "lat": -34.89574,
+  "lng": 138.56552
+ },
+ "CROYDON PARK": {
+  "lat": -34.8801,
+  "lng": 138.56719
+ },
+ "CUMBERLAND PARK": {
+  "lat": -34.97202,
+  "lng": 138.5867
+ },
+ "DARLINGTON": {
+  "lat": -35.03309,
+  "lng": 138.55576
+ },
+ "DAVOREN PARK": {
+  "lat": -34.69139,
+  "lng": 138.66839
+ },
+ "DAW PARK": {
+  "lat": -34.98538,
+  "lng": 138.58776
+ },
+ "DERNANCOURT": {
+  "lat": -34.86204,
+  "lng": 138.67673
+ },
+ "DEVON PARK": {
+  "lat": -34.88767,
+  "lng": 138.57978
+ },
+ "DIREK": {
+  "lat": -34.72229,
+  "lng": 138.60845
+ },
+ "DOVER GARDENS": {
+  "lat": -35.02397,
+  "lng": 138.53695
+ },
+ "DRY CREEK": {
+  "lat": -34.81478,
+  "lng": 138.56775
+ },
+ "DUDLEY PARK": {
+  "lat": -34.88019,
+  "lng": 138.57882
+ },
+ "DULWICH": {
+  "lat": -34.9369,
+  "lng": 138.62899
+ },
+ "EASTWOOD": {
+  "lat": -34.94236,
+  "lng": 138.62176
+ },
+ "ECHUNGA": {
+  "lat": -35.09806,
+  "lng": 138.80285
+ },
+ "EDEN HILLS": {
+  "lat": -35.02102,
+  "lng": 138.5953
+ },
+ "EDWARDSTOWN": {
+  "lat": -34.98013,
+  "lng": 138.56933
+ },
+ "ELIZABETH": {
+  "lat": -34.72024,
+  "lng": 138.66924
+ },
+ "ELIZABETH DOWNS": {
+  "lat": -34.69957,
+  "lng": 138.69357
+ },
+ "ELIZABETH EAST": {
+  "lat": -34.7259,
+  "lng": 138.68098
+ },
+ "ELIZABETH GROVE": {
+  "lat": -34.73622,
+  "lng": 138.67023
+ },
+ "ELIZABETH NORTH": {
+  "lat": -34.70093,
+  "lng": 138.67705
+ },
+ "ELIZABETH PARK": {
+  "lat": -34.71259,
+  "lng": 138.68526
+ },
+ "ELIZABETH SOUTH": {
+  "lat": -34.74093,
+  "lng": 138.65673
+ },
+ "ELIZABETH VALE": {
+  "lat": -34.7489,
+  "lng": 138.66752
+ },
+ "ENFIELD": {
+  "lat": -34.86052,
+  "lng": 138.60551
+ },
+ "ERINDALE": {
+  "lat": -34.92891,
+  "lng": 138.66389
+ },
+ "ETHELTON": {
+  "lat": -34.84884,
+  "lng": 138.4901
+ },
+ "EVANDALE": {
+  "lat": -34.90553,
+  "lng": 138.63545
+ },
+ "EVANSTON": {
+  "lat": -34.61665,
+  "lng": 138.73372
+ },
+ "EVANSTON GARDENS": {
+  "lat": -34.62811,
+  "lng": 138.71984
+ },
+ "EVANSTON PARK": {
+  "lat": -34.62886,
+  "lng": 138.74872
+ },
+ "EVANSTON SOUTH": {
+  "lat": -34.64854,
+  "lng": 138.72827
+ },
+ "EVERARD PARK": {
+  "lat": -34.95407,
+  "lng": 138.57478
+ },
+ "EXETER": {
+  "lat": -34.8385,
+  "lng": 138.4906
+ },
+ "EYRE": {
+  "lat": -34.69406,
+  "lng": 138.65125
+ },
+ "FAIRVIEW PARK": {
+  "lat": -34.79994,
+  "lng": 138.72867
+ },
+ "FELIXSTOW": {
+  "lat": -34.88897,
+  "lng": 138.64701
+ },
+ "FERRYDEN PARK": {
+  "lat": -34.8689,
+  "lng": 138.56149
+ },
+ "FINDON": {
+  "lat": -34.89953,
+  "lng": 138.53224
+ },
+ "FIRLE": {
+  "lat": -34.90469,
+  "lng": 138.65324
+ },
+ "FITZROY": {
+  "lat": -34.89686,
+  "lng": 138.59131
+ },
+ "FLAGSTAFF HILL": {
+  "lat": -35.0489,
+  "lng": 138.58639
+ },
+ "FLINDERS PARK": {
+  "lat": -34.91024,
+  "lng": 138.54342
+ },
+ "FOREST RANGE": {
+  "lat": -34.92992,
+  "lng": 138.80097
+ },
+ "FORESTVILLE": {
+  "lat": -34.95127,
+  "lng": 138.58114
+ },
+ "FREWVILLE": {
+  "lat": -34.94793,
+  "lng": 138.63121
+ },
+ "FULHAM": {
+  "lat": -34.92738,
+  "lng": 138.51348
+ },
+ "FULHAM GARDENS": {
+  "lat": -34.91473,
+  "lng": 138.51323
+ },
+ "FULLARTON": {
+  "lat": -34.95414,
+  "lng": 138.62603
+ },
+ "GAWLER": {
+  "lat": -34.59743,
+  "lng": 138.74483
+ },
+ "GAWLER EAST": {
+  "lat": -34.60262,
+  "lng": 138.76458
+ },
+ "GAWLER SOUTH": {
+  "lat": -34.6114,
+  "lng": 138.74994
+ },
+ "GAWLER WEST": {
+  "lat": -34.60436,
+  "lng": 138.73388
+ },
+ "GEPPS CROSS": {
+  "lat": -34.84234,
+  "lng": 138.60459
+ },
+ "GILBERTON": {
+  "lat": -34.90051,
+  "lng": 138.61251
+ },
+ "GILLES PLAINS": {
+  "lat": -34.84997,
+  "lng": 138.65897
+ },
+ "GILLMAN": {
+  "lat": -34.8341,
+  "lng": 138.52588
+ },
+ "GLANDORE": {
+  "lat": -34.96153,
+  "lng": 138.56833
+ },
+ "GLANVILLE": {
+  "lat": -34.84418,
+  "lng": 138.49079
+ },
+ "GLEN OSMOND": {
+  "lat": -34.9596,
+  "lng": 138.64875
+ },
+ "GLENALTA": {
+  "lat": -35.01193,
+  "lng": 138.62818
+ },
+ "GLENELG": {
+  "lat": -34.98064,
+  "lng": 138.5148
+ },
+ "GLENELG EAST": {
+  "lat": -34.98168,
+  "lng": 138.52552
+ },
+ "GLENELG NORTH": {
+  "lat": -34.96864,
+  "lng": 138.51814
+ },
+ "GLENELG SOUTH": {
+  "lat": -34.98825,
+  "lng": 138.51534
+ },
+ "GLENGOWRIE": {
+  "lat": -34.98711,
+  "lng": 138.53345
+ },
+ "GLENSIDE": {
+  "lat": -34.94272,
+  "lng": 138.63372
+ },
+ "GLENUNGA": {
+  "lat": -34.95061,
+  "lng": 138.63914
+ },
+ "GLYNDE": {
+  "lat": -34.89603,
+  "lng": 138.65251
+ },
+ "GOLDEN GROVE": {
+  "lat": -34.77669,
+  "lng": 138.73089
+ },
+ "GOODWOOD": {
+  "lat": -34.95096,
+  "lng": 138.59256
+ },
+ "GRANGE": {
+  "lat": -34.89581,
+  "lng": 138.49771
+ },
+ "GREEN FIELDS": {
+  "lat": -34.79487,
+  "lng": 138.60338
+ },
+ "GREENACRES": {
+  "lat": -34.86862,
+  "lng": 138.62831
+ },
+ "GREENHILL": {
+  "lat": -34.94999,
+  "lng": 138.69213
+ },
+ "GREENWITH": {
+  "lat": -34.76563,
+  "lng": 138.71045
+ },
+ "GULFVIEW HEIGHTS": {
+  "lat": -34.79546,
+  "lng": 138.6694
+ },
+ "GUMERACHA": {
+  "lat": -34.82162,
+  "lng": 138.88747
+ },
+ "HACKHAM": {
+  "lat": -35.15495,
+  "lng": 138.52522
+ },
+ "HACKHAM WEST": {
+  "lat": -35.14237,
+  "lng": 138.51539
+ },
+ "HACKNEY": {
+  "lat": -34.91378,
+  "lng": 138.61635
+ },
+ "HAHNDORF": {
+  "lat": -35.0336,
+  "lng": 138.80908
+ },
+ "HALLETT COVE": {
+  "lat": -35.07271,
+  "lng": 138.511
+ },
+ "HAMPSTEAD GARDENS": {
+  "lat": -34.87444,
+  "lng": 138.62885
+ },
+ "HAPPY VALLEY": {
+  "lat": -35.07648,
+  "lng": 138.57575
+ },
+ "HAWTHORN": {
+  "lat": -34.97097,
+  "lng": 138.60419
+ },
+ "HAWTHORNDENE": {
+  "lat": -35.02527,
+  "lng": 138.63856
+ },
+ "HAZELWOOD PARK": {
+  "lat": -34.93918,
+  "lng": 138.6562
+ },
+ "HEATHFIELD": {
+  "lat": -35.02827,
+  "lng": 138.71737
+ },
+ "HEATHPOOL": {
+  "lat": -34.93127,
+  "lng": 138.64627
+ },
+ "HECTORVILLE": {
+  "lat": -34.89304,
+  "lng": 138.66569
+ },
+ "HENDON": {
+  "lat": -34.87507,
+  "lng": 138.51547
+ },
+ "HENLEY BEACH": {
+  "lat": -34.91587,
+  "lng": 138.49905
+ },
+ "HENLEY BEACH SOUTH": {
+  "lat": -34.92981,
+  "lng": 138.50159
+ },
+ "HIGHBURY": {
+  "lat": -34.8545,
+  "lng": 138.70657
+ },
+ "HIGHGATE": {
+  "lat": -34.96177,
+  "lng": 138.62166
+ },
+ "HILLBANK": {
+  "lat": -34.73505,
+  "lng": 138.68713
+ },
+ "HILLCREST": {
+  "lat": -34.8626,
+  "lng": 138.643
+ },
+ "HILLIER": {
+  "lat": -34.62323,
+  "lng": 138.69535
+ },
+ "HILTON": {
+  "lat": -34.93213,
+  "lng": 138.56583
+ },
+ "HINDMARSH": {
+  "lat": -34.90641,
+  "lng": 138.5698
+ },
+ "HOLDEN HILL": {
+  "lat": -34.85172,
+  "lng": 138.67204
+ },
+ "HOPE VALLEY": {
+  "lat": -34.84536,
+  "lng": 138.69617
+ },
+ "HOVE": {
+  "lat": -35.01114,
+  "lng": 138.5233
+ },
+ "HUNTFIELD HEIGHTS": {
+  "lat": -35.15453,
+  "lng": 138.51406
+ },
+ "HYDE PARK": {
+  "lat": -34.95666,
+  "lng": 138.60272
+ },
+ "INGLE FARM": {
+  "lat": -34.8277,
+  "lng": 138.64538
+ },
+ "INGLEWOOD": {
+  "lat": -34.80213,
+  "lng": 138.79211
+ },
+ "IRONBANK": {
+  "lat": -35.04276,
+  "lng": 138.6863
+ },
+ "JOSLIN": {
+  "lat": -34.89959,
+  "lng": 138.62687
+ },
+ "KANGARILLA": {
+  "lat": -35.15246,
+  "lng": 138.67024
+ },
+ "KANMANTOO": {
+  "lat": -35.0656,
+  "lng": 139.00341
+ },
+ "KENSINGTON": {
+  "lat": -34.92385,
+  "lng": 138.64557
+ },
+ "KENSINGTON GARDENS": {
+  "lat": -34.91965,
+  "lng": 138.66305
+ },
+ "KENSINGTON PARK": {
+  "lat": -34.92019,
+  "lng": 138.6543
+ },
+ "KENT TOWN": {
+  "lat": -34.92146,
+  "lng": 138.62004
+ },
+ "KERSBROOK": {
+  "lat": -34.75072,
+  "lng": 138.86062
+ },
+ "KESWICK": {
+  "lat": -34.94438,
+  "lng": 138.57747
+ },
+ "KIDMAN PARK": {
+  "lat": -34.91226,
+  "lng": 138.52689
+ },
+ "KILBURN": {
+  "lat": -34.85977,
+  "lng": 138.58569
+ },
+ "KILKENNY": {
+  "lat": -34.87876,
+  "lng": 138.55317
+ },
+ "KINGS PARK": {
+  "lat": -34.96357,
+  "lng": 138.59272
+ },
+ "KINGSTON PARK": {
+  "lat": -35.03903,
+  "lng": 138.51786
+ },
+ "KINGSWOOD": {
+  "lat": -34.97047,
+  "lng": 138.61375
+ },
+ "KLEMZIG": {
+  "lat": -34.87896,
+  "lng": 138.63863
+ },
+ "KURRALTA PARK": {
+  "lat": -34.95148,
+  "lng": 138.5669
+ },
+ "LARGS BAY": {
+  "lat": -34.82684,
+  "lng": 138.49408
+ },
+ "LARGS NORTH": {
+  "lat": -34.81687,
+  "lng": 138.50062
+ },
+ "LEABROOK": {
+  "lat": -34.92972,
+  "lng": 138.6552
+ },
+ "LEAWOOD GARDENS": {
+  "lat": -34.97139,
+  "lng": 138.66977
+ },
+ "LENSWOOD": {
+  "lat": -34.92434,
+  "lng": 138.82287
+ },
+ "LIGHTSVIEW": {
+  "lat": -34.86194,
+  "lng": 138.62713
+ },
+ "LINDEN PARK": {
+  "lat": -34.94359,
+  "lng": 138.64729
+ },
+ "LITTLEHAMPTON": {
+  "lat": -35.04004,
+  "lng": 138.86683
+ },
+ "LOBETHAL": {
+  "lat": -34.89991,
+  "lng": 138.87366
+ },
+ "LOCKLEYS": {
+  "lat": -34.92488,
+  "lng": 138.53087
+ },
+ "LONGWOOD": {
+  "lat": -35.04317,
+  "lng": 138.72195
+ },
+ "LOWER MITCHAM": {
+  "lat": -34.98093,
+  "lng": 138.60568
+ },
+ "LYNTON": {
+  "lat": -34.99722,
+  "lng": 138.60731
+ },
+ "MACCLESFIELD": {
+  "lat": -35.1772,
+  "lng": 138.84275
+ },
+ "MAGILL": {
+  "lat": -34.90905,
+  "lng": 138.67491
+ },
+ "MALVERN": {
+  "lat": -34.95914,
+  "lng": 138.6126
+ },
+ "MANNINGHAM": {
+  "lat": -34.87736,
+  "lng": 138.62195
+ },
+ "MANSFIELD PARK": {
+  "lat": -34.85644,
+  "lng": 138.55187
+ },
+ "MARBLE HILL": {
+  "lat": -34.92499,
+  "lng": 138.75587
+ },
+ "MARDEN": {
+  "lat": -34.89252,
+  "lng": 138.63499
+ },
+ "MARINO": {
+  "lat": -35.05069,
+  "lng": 138.51574
+ },
+ "MARION": {
+  "lat": -35.00635,
+  "lng": 138.55354
+ },
+ "MARLESTON": {
+  "lat": -34.94532,
+  "lng": 138.5616
+ },
+ "MARRYATVILLE": {
+  "lat": -34.92824,
+  "lng": 138.64601
+ },
+ "MASLIN BEACH": {
+  "lat": -35.23224,
+  "lng": 138.48069
+ },
+ "MAWSON LAKES": {
+  "lat": -34.8106,
+  "lng": 138.6109
+ },
+ "MAYLANDS": {
+  "lat": -34.91134,
+  "lng": 138.63673
+ },
+ "MCLAREN FLAT": {
+  "lat": -35.19929,
+  "lng": 138.61263
+ },
+ "MCLAREN VALE": {
+  "lat": -35.21022,
+  "lng": 138.54687
+ },
+ "MEADOWS": {
+  "lat": -35.17429,
+  "lng": 138.75542
+ },
+ "MEDINDIE": {
+  "lat": -34.89734,
+  "lng": 138.60493
+ },
+ "MEDINDIE GARDENS": {
+  "lat": -34.89213,
+  "lng": 138.6062
+ },
+ "MELROSE PARK": {
+  "lat": -34.98525,
+  "lng": 138.57875
+ },
+ "MILE END": {
+  "lat": -34.92629,
+  "lng": 138.57102
+ },
+ "MILLSWOOD": {
+  "lat": -34.95728,
+  "lng": 138.58966
+ },
+ "MITCHAM": {
+  "lat": -34.9843,
+  "lng": 138.6229
+ },
+ "MITCHELL PARK": {
+  "lat": -35.005,
+  "lng": 138.56229
+ },
+ "MOANA": {
+  "lat": -35.20789,
+  "lng": 138.47431
+ },
+ "MODBURY": {
+  "lat": -34.83392,
+  "lng": 138.68509
+ },
+ "MODBURY HEIGHTS": {
+  "lat": -34.812,
+  "lng": 138.68231
+ },
+ "MODBURY NORTH": {
+  "lat": -34.82318,
+  "lng": 138.68099
+ },
+ "MONTACUTE": {
+  "lat": -34.88681,
+  "lng": 138.75283
+ },
+ "MORPHETT VALE": {
+  "lat": -35.12078,
+  "lng": 138.52777
+ },
+ "MORPHETTVILLE": {
+  "lat": -34.98453,
+  "lng": 138.54312
+ },
+ "MOUNT BARKER": {
+  "lat": -35.08104,
+  "lng": 138.86357
+ },
+ "MOUNT GEORGE": {
+  "lat": -34.9922,
+  "lng": 138.76456
+ },
+ "MOUNT OSMOND": {
+  "lat": -34.96422,
+  "lng": 138.65912
+ },
+ "MOUNT TORRENS": {
+  "lat": -34.87173,
+  "lng": 138.97491
+ },
+ "MUNNO PARA": {
+  "lat": -34.6675,
+  "lng": 138.68969
+ },
+ "MUNNO PARA DOWNS": {
+  "lat": -34.64949,
+  "lng": 138.68586
+ },
+ "MUNNO PARA WEST": {
+  "lat": -34.6582,
+  "lng": 138.6699
+ },
+ "MYLOR": {
+  "lat": -35.04806,
+  "lng": 138.75774
+ },
+ "MYRTLE BANK": {
+  "lat": -34.96047,
+  "lng": 138.63369
+ },
+ "NAILSWORTH": {
+  "lat": -34.88441,
+  "lng": 138.60628
+ },
+ "NAIRNE": {
+  "lat": -35.03264,
+  "lng": 138.91209
+ },
+ "NETHERBY": {
+  "lat": -34.97051,
+  "lng": 138.62513
+ },
+ "NETLEY": {
+  "lat": -34.94938,
+  "lng": 138.54926
+ },
+ "NEW PORT": {
+  "lat": -34.84535,
+  "lng": 138.49582
+ },
+ "NEWTON": {
+  "lat": -34.88179,
+  "lng": 138.68233
+ },
+ "NOARLUNGA DOWNS": {
+  "lat": -35.15681,
+  "lng": 138.49862
+ },
+ "NORTH ADELAIDE": {
+  "lat": -34.90836,
+  "lng": 138.5953
+ },
+ "NORTH BRIGHTON": {
+  "lat": -35.00503,
+  "lng": 138.52137
+ },
+ "NORTH HAVEN": {
+  "lat": -34.78752,
+  "lng": 138.49106
+ },
+ "NORTH PLYMPTON": {
+  "lat": -34.95589,
+  "lng": 138.54936
+ },
+ "NORTHFIELD": {
+  "lat": -34.8484,
+  "lng": 138.62609
+ },
+ "NORTHGATE": {
+  "lat": -34.85254,
+  "lng": 138.63124
+ },
+ "NORTON SUMMIT": {
+  "lat": -34.91845,
+  "lng": 138.73577
+ },
+ "NORWOOD": {
+  "lat": -34.92134,
+  "lng": 138.63206
+ },
+ "NOVAR GARDENS": {
+  "lat": -34.96592,
+  "lng": 138.53161
+ },
+ "O'HALLORAN HILL": {
+  "lat": -35.05578,
+  "lng": 138.55437
+ },
+ "O'SULLIVAN BEACH": {
+  "lat": -35.12123,
+  "lng": 138.47626
+ },
+ "OAKBANK": {
+  "lat": -34.98018,
+  "lng": 138.8577
+ },
+ "OAKDEN": {
+  "lat": -34.85281,
+  "lng": 138.64338
+ },
+ "OAKLANDS PARK": {
+  "lat": -35.00679,
+  "lng": 138.54462
+ },
+ "OLD NOARLUNGA": {
+  "lat": -35.18266,
+  "lng": 138.50372
+ },
+ "OLD REYNELLA": {
+  "lat": -35.09661,
+  "lng": 138.5405
+ },
+ "ONE TREE HILL": {
+  "lat": -34.71718,
+  "lng": 138.74942
+ },
+ "ONKAPARINGA HILLS": {
+  "lat": -35.13622,
+  "lng": 138.56563
+ },
+ "OSBORNE": {
+  "lat": -34.79775,
+  "lng": 138.50143
+ },
+ "OTTOWAY": {
+  "lat": -34.84766,
+  "lng": 138.53576
+ },
+ "OVINGHAM": {
+  "lat": -34.89853,
+  "lng": 138.58504
+ },
+ "PANORAMA": {
+  "lat": -35.00073,
+  "lng": 138.59742
+ },
+ "PARA HILLS": {
+  "lat": -34.81163,
+  "lng": 138.65548
+ },
+ "PARA HILLS WEST": {
+  "lat": -34.80351,
+  "lng": 138.64438
+ },
+ "PARA VISTA": {
+  "lat": -34.82844,
+  "lng": 138.66276
+ },
+ "PARADISE": {
+  "lat": -34.87112,
+  "lng": 138.67636
+ },
+ "PARAFIELD GARDENS": {
+  "lat": -34.78257,
+  "lng": 138.61082
+ },
+ "PARALOWIE": {
+  "lat": -34.75716,
+  "lng": 138.60789
+ },
+ "PARK HOLME": {
+  "lat": -34.98886,
+  "lng": 138.55218
+ },
+ "PARKSIDE": {
+  "lat": -34.94619,
+  "lng": 138.61665
+ },
+ "PASADENA": {
+  "lat": -35.00286,
+  "lng": 138.5886
+ },
+ "PAYNEHAM": {
+  "lat": -34.89887,
+  "lng": 138.64237
+ },
+ "PAYNEHAM SOUTH": {
+  "lat": -34.90469,
+  "lng": 138.64441
+ },
+ "PENNINGTON": {
+  "lat": -34.85759,
+  "lng": 138.53158
+ },
+ "PETERHEAD": {
+  "lat": -34.83131,
+  "lng": 138.49918
+ },
+ "PICCADILLY": {
+  "lat": -34.97844,
+  "lng": 138.73362
+ },
+ "PLYMPTON": {
+  "lat": -34.96214,
+  "lng": 138.55486
+ },
+ "PLYMPTON PARK": {
+  "lat": -34.97598,
+  "lng": 138.55135
+ },
+ "POORAKA": {
+  "lat": -34.82573,
+  "lng": 138.623
+ },
+ "PORT ADELAIDE": {
+  "lat": -34.83602,
+  "lng": 138.5122
+ },
+ "PORT NOARLUNGA": {
+  "lat": -35.14945,
+  "lng": 138.47741
+ },
+ "PORT NOARLUNGA SOUTH": {
+  "lat": -35.1644,
+  "lng": 138.47688
+ },
+ "PORT WILLUNGA": {
+  "lat": -35.25924,
+  "lng": 138.46419
+ },
+ "PROSPECT": {
+  "lat": -34.88265,
+  "lng": 138.59265
+ },
+ "QUEENSTOWN": {
+  "lat": -34.86094,
+  "lng": 138.51052
+ },
+ "REDWOOD PARK": {
+  "lat": -34.81137,
+  "lng": 138.70715
+ },
+ "REGENCY PARK": {
+  "lat": -34.8626,
+  "lng": 138.5726
+ },
+ "REID": {
+  "lat": -34.59927,
+  "lng": 138.73068
+ },
+ "RENOWN PARK": {
+  "lat": -34.89056,
+  "lng": 138.57728
+ },
+ "REYNELLA": {
+  "lat": -35.09648,
+  "lng": 138.52142
+ },
+ "REYNELLA EAST": {
+  "lat": -35.08807,
+  "lng": 138.55267
+ },
+ "RICHMOND": {
+  "lat": -34.93867,
+  "lng": 138.56206
+ },
+ "RIDGEHAVEN": {
+  "lat": -34.82101,
+  "lng": 138.70469
+ },
+ "RIDLEYTON": {
+  "lat": -34.89415,
+  "lng": 138.57047
+ },
+ "ROSE PARK": {
+  "lat": -34.93058,
+  "lng": 138.62825
+ },
+ "ROSEWATER": {
+  "lat": -34.8519,
+  "lng": 138.5217
+ },
+ "ROSSLYN PARK": {
+  "lat": -34.9218,
+  "lng": 138.67506
+ },
+ "ROSTREVOR": {
+  "lat": -34.8937,
+  "lng": 138.69176
+ },
+ "ROYAL PARK": {
+  "lat": -34.87069,
+  "lng": 138.50749
+ },
+ "ROYSTON PARK": {
+  "lat": -34.89741,
+  "lng": 138.63031
+ },
+ "SALISBURY": {
+  "lat": -34.76408,
+  "lng": 138.64206
+ },
+ "SALISBURY DOWNS": {
+  "lat": -34.7717,
+  "lng": 138.62433
+ },
+ "SALISBURY EAST": {
+  "lat": -34.78117,
+  "lng": 138.67278
+ },
+ "SALISBURY HEIGHTS": {
+  "lat": -34.76301,
+  "lng": 138.6835
+ },
+ "SALISBURY NORTH": {
+  "lat": -34.74604,
+  "lng": 138.62779
+ },
+ "SALISBURY PARK": {
+  "lat": -34.75858,
+  "lng": 138.66813
+ },
+ "SALISBURY PLAIN": {
+  "lat": -34.76741,
+  "lng": 138.66064
+ },
+ "SCOTT CREEK": {
+  "lat": -35.05874,
+  "lng": 138.70142
+ },
+ "SEACLIFF": {
+  "lat": -35.03241,
+  "lng": 138.52091
+ },
+ "SEACLIFF PARK": {
+  "lat": -35.04264,
+  "lng": 138.52947
+ },
+ "SEACOMBE GARDENS": {
+  "lat": -35.02342,
+  "lng": 138.54582
+ },
+ "SEACOMBE HEIGHTS": {
+  "lat": -35.0337,
+  "lng": 138.54625
+ },
+ "SEAFORD": {
+  "lat": -35.18567,
+  "lng": 138.47782
+ },
+ "SEAFORD HEIGHTS": {
+  "lat": -35.1981,
+  "lng": 138.49652
+ },
+ "SEAFORD MEADOWS": {
+  "lat": -35.17129,
+  "lng": 138.48666
+ },
+ "SEAFORD RISE": {
+  "lat": -35.20436,
+  "lng": 138.4848
+ },
+ "SEATON": {
+  "lat": -34.89363,
+  "lng": 138.51324
+ },
+ "SEAVIEW DOWNS": {
+  "lat": -35.04212,
+  "lng": 138.53837
+ },
+ "SEFTON PARK": {
+  "lat": -34.87631,
+  "lng": 138.60646
+ },
+ "SELLICKS BEACH": {
+  "lat": -35.33093,
+  "lng": 138.45851
+ },
+ "SEMAPHORE": {
+  "lat": -34.8393,
+  "lng": 138.48358
+ },
+ "SEMAPHORE PARK": {
+  "lat": -34.85553,
+  "lng": 138.48571
+ },
+ "SEMAPHORE SOUTH": {
+  "lat": -34.84723,
+  "lng": 138.48093
+ },
+ "SHEIDOW PARK": {
+  "lat": -35.07888,
+  "lng": 138.52728
+ },
+ "SKYE": {
+  "lat": -34.92442,
+  "lng": 138.69297
+ },
+ "SMITHFIELD": {
+  "lat": -34.68473,
+  "lng": 138.68642
+ },
+ "SMITHFIELD PLAINS": {
+  "lat": -34.67682,
+  "lng": 138.67682
+ },
+ "SOMERTON PARK": {
+  "lat": -34.9966,
+  "lng": 138.5204
+ },
+ "SOUTH BRIGHTON": {
+  "lat": -35.02602,
+  "lng": 138.52578
+ },
+ "SOUTH PLYMPTON": {
+  "lat": -34.97366,
+  "lng": 138.56015
+ },
+ "SPRINGFIELD": {
+  "lat": -34.97807,
+  "lng": 138.63265
+ },
+ "ST AGNES": {
+  "lat": -34.83065,
+  "lng": 138.7108
+ },
+ "ST CLAIR": {
+  "lat": -34.87086,
+  "lng": 138.53534
+ },
+ "ST GEORGES": {
+  "lat": -34.95199,
+  "lng": 138.64788
+ },
+ "ST KILDA": {
+  "lat": -34.74886,
+  "lng": 138.5524
+ },
+ "ST MARYS": {
+  "lat": -35.00406,
+  "lng": 138.57979
+ },
+ "ST MORRIS": {
+  "lat": -34.91108,
+  "lng": 138.65348
+ },
+ "ST PETERS": {
+  "lat": -34.90491,
+  "lng": 138.62238
+ },
+ "STEPNEY": {
+  "lat": -34.9122,
+  "lng": 138.6293
+ },
+ "STIRLING": {
+  "lat": -35.00339,
+  "lng": 138.72152
+ },
+ "STONYFELL": {
+  "lat": -34.93429,
+  "lng": 138.6767
+ },
+ "STURT": {
+  "lat": -35.02278,
+  "lng": 138.55465
+ },
+ "SUMMERTOWN": {
+  "lat": -34.95917,
+  "lng": 138.72526
+ },
+ "SURREY DOWNS": {
+  "lat": -34.79969,
+  "lng": 138.7113
+ },
+ "TAPEROO": {
+  "lat": -34.80653,
+  "lng": 138.50012
+ },
+ "TEA TREE GULLY": {
+  "lat": -34.8233,
+  "lng": 138.73439
+ },
+ "TENNYSON": {
+  "lat": -34.88554,
+  "lng": 138.48561
+ },
+ "TERINGIE": {
+  "lat": -34.9144,
+  "lng": 138.70247
+ },
+ "THEBARTON": {
+  "lat": -34.91535,
+  "lng": 138.57228
+ },
+ "THORNGATE": {
+  "lat": -34.89713,
+  "lng": 138.59654
+ },
+ "TONSLEY": {
+  "lat": -35.00961,
+  "lng": 138.57096
+ },
+ "TOORAK GARDENS": {
+  "lat": -34.93323,
+  "lng": 138.63761
+ },
+ "TORRENS PARK": {
+  "lat": -34.98537,
+  "lng": 138.61349
+ },
+ "TORRENSVILLE": {
+  "lat": -34.91973,
+  "lng": 138.5597
+ },
+ "TRANMERE": {
+  "lat": -34.90548,
+  "lng": 138.66213
+ },
+ "TRINITY GARDENS": {
+  "lat": -34.91117,
+  "lng": 138.64458
+ },
+ "TROTT PARK": {
+  "lat": -35.07144,
+  "lng": 138.54001
+ },
+ "TUSMORE": {
+  "lat": -34.9357,
+  "lng": 138.64727
+ },
+ "UNDERDALE": {
+  "lat": -34.9195,
+  "lng": 138.54911
+ },
+ "UNLEY": {
+  "lat": -34.94852,
+  "lng": 138.60674
+ },
+ "UNLEY PARK": {
+  "lat": -34.96232,
+  "lng": 138.60124
+ },
+ "UPPER STURT": {
+  "lat": -35.0248,
+  "lng": 138.68026
+ },
+ "URAIDLA": {
+  "lat": -34.96067,
+  "lng": 138.74505
+ },
+ "URRBRAE": {
+  "lat": -34.96807,
+  "lng": 138.63842
+ },
+ "VALE PARK": {
+  "lat": -34.88597,
+  "lng": 138.62704
+ },
+ "VALLEY VIEW": {
+  "lat": -34.83993,
+  "lng": 138.66098
+ },
+ "VIRGINIA": {
+  "lat": -34.6628,
+  "lng": 138.57141
+ },
+ "VISTA": {
+  "lat": -34.83582,
+  "lng": 138.73097
+ },
+ "WALKERVILLE": {
+  "lat": -34.892,
+  "lng": 138.61802
+ },
+ "WALKLEY HEIGHTS": {
+  "lat": -34.84014,
+  "lng": 138.63726
+ },
+ "WARRADALE": {
+  "lat": -35.00745,
+  "lng": 138.53571
+ },
+ "WATERFALL GULLY": {
+  "lat": -34.96164,
+  "lng": 138.67453
+ },
+ "WATTLE PARK": {
+  "lat": -34.92719,
+  "lng": 138.67861
+ },
+ "WAYVILLE": {
+  "lat": -34.94481,
+  "lng": 138.59176
+ },
+ "WELLAND": {
+  "lat": -34.90338,
+  "lng": 138.55864
+ },
+ "WEST BEACH": {
+  "lat": -34.94504,
+  "lng": 138.50943
+ },
+ "WEST CROYDON": {
+  "lat": -34.88871,
+  "lng": 138.5592
+ },
+ "WEST HINDMARSH": {
+  "lat": -34.90518,
+  "lng": 138.56297
+ },
+ "WEST LAKES": {
+  "lat": -34.87357,
+  "lng": 138.49479
+ },
+ "WEST LAKES SHORE": {
+  "lat": -34.86528,
+  "lng": 138.48539
+ },
+ "WEST RICHMOND": {
+  "lat": -34.93929,
+  "lng": 138.55035
+ },
+ "WESTBOURNE PARK": {
+  "lat": -34.97162,
+  "lng": 138.59532
+ },
+ "WILLASTON": {
+  "lat": -34.58665,
+  "lng": 138.74146
+ },
+ "WILLUNGA": {
+  "lat": -35.26548,
+  "lng": 138.56912
+ },
+ "WILLUNGA SOUTH": {
+  "lat": -35.29729,
+  "lng": 138.54521
+ },
+ "WINDSOR GARDENS": {
+  "lat": -34.8655,
+  "lng": 138.65436
+ },
+ "WINGFIELD": {
+  "lat": -34.84106,
+  "lng": 138.561
+ },
+ "WOODCROFT": {
+  "lat": -35.10317,
+  "lng": 138.56244
+ },
+ "WOODFORDE": {
+  "lat": -34.90496,
+  "lng": 138.70875
+ },
+ "WOODSIDE": {
+  "lat": -34.95363,
+  "lng": 138.90596
+ },
+ "WOODVILLE": {
+  "lat": -34.87707,
+  "lng": 138.53805
+ },
+ "WOODVILLE GARDENS": {
+  "lat": -34.86741,
+  "lng": 138.55229
+ },
+ "WOODVILLE NORTH": {
+  "lat": -34.86611,
+  "lng": 138.54158
+ },
+ "WOODVILLE PARK": {
+  "lat": -34.88225,
+  "lng": 138.54646
+ },
+ "WOODVILLE SOUTH": {
+  "lat": -34.88855,
+  "lng": 138.53609
+ },
+ "WOODVILLE WEST": {
+  "lat": -34.88558,
+  "lng": 138.52641
+ },
+ "WYNN VALE": {
+  "lat": -34.79929,
+  "lng": 138.68686
+ },
+ "YATALA VALE": {
+  "lat": -34.79373,
+  "lng": 138.74249
+ }
+}
