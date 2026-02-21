@@ -1,5 +1,7 @@
 # Adelaide Property Market Explorer
 
+**[Live Demo](https://adelaide-property-explorer.streamlit.app/)** | **[Data Analysis Repo](https://github.com/mussaussie/adelaide-property-market-analysis)**
+
 Interactive Streamlit dashboard exploring **414 Adelaide suburbs** with 7 years of property data (Q1 2019 - Q4 2025).
 
 ## Features
@@ -37,7 +39,9 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 
-## Deployment
+## Live App
+
+**[https://adelaide-property-explorer.streamlit.app](https://adelaide-property-explorer.streamlit.app/)**
 
 Deployed on [Streamlit Community Cloud](https://streamlit.io/cloud).
 
