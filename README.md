@@ -1,19 +1,24 @@
-# Adelaide Property Market Explorer
+# Adelaide Property Decision Dashboard
 
-**[Live Demo](https://adelaide-property-explorer.streamlit.app/)** | **[Data Analysis Repo](https://github.com/mussaussie/adelaide-property-market-analysis)**
+**[Data Analysis Repo](https://github.com/mussaussie/adelaide-property-market-analysis)**
 
-Interactive Streamlit dashboard exploring **414 Adelaide suburbs** with 7 years of property data (Q1 2019 - Q4 2025).
+Presentation-focused Streamlit dashboard exploring **414 Adelaide suburbs** with 7 years of property data (Q1 2019 - Q4 2025). The deployment entry point is `app_presentation.py`.
 
 ## Features
 
-- **Market Overview** - Top growth suburbs, highest risk alerts, price tiers
-- **Year-to-Year Growth** - Annual price trends with CAGR, best/worst year analysis
+- **Overview** - Quick-search suburb rankings, executive snapshot, risk-return landscape
+- **Explore Suburb** - Price history, predicted 2026 values, risk, rent, crime, and community details
+- **Compare Suburbs** - Side-by-side suburb comparison across key investment metrics
+- **Opportunity Finder** - Filtered shortlist for growth, yield, risk, and affordability signals
+- **Map Lab** - Interactive suburb map with switchable metrics
+- **Year-to-Year Growth** - Annual price trends with best/worst year analysis
 - **Demographics** - Population, median age, household income, mortgage data (ABS Census 2021)
 - **Crime & Safety** - Total crime counts, property vs person crimes, crime rate per 1,000 residents, top offense types
 - **Rental & Yield** - Fair vs actual rent, house/unit yields, affordability categories, greediness gap
-- **Predictions & Risk** - ML-predicted prices (Ridge Regression), 2026 forecasts, risk scores, investment strategies
+- **Predictions & Risk** - ML-predicted prices (Ridge Regression), predicted 2026 values, risk scores, investment strategies
 - **Cultural Communities** - Indian, Chinese, Vietnamese, Italian, Greek populations with diversity index
 - **PDF & DOCX Reports** - Downloadable suburb-level reports
+- **Methodology & Glossary** - Plain-English notes for non-technical users
 
 ## Data Sources
 
@@ -26,7 +31,7 @@ Interactive Streamlit dashboard exploring **414 Adelaide suburbs** with 7 years 
 
 ## Tech Stack
 
-- **Frontend**: Streamlit with custom CSS (animated gradients, responsive design)
+- **Frontend**: Streamlit with custom CSS and responsive layout
 - **Charts**: Plotly.js (client-side rendering)
 - **Maps**: Folium with GeoJSON suburb boundaries
 - **Reports**: fpdf2 (PDF), python-docx (DOCX)
@@ -36,20 +41,37 @@ Interactive Streamlit dashboard exploring **414 Adelaide suburbs** with 7 years 
 
 ```bash
 pip install -r requirements.txt
-streamlit run app.py
+streamlit run app_presentation.py
 ```
 
-## Live App
+For local phone testing on the same Wi-Fi network:
 
-**[https://adelaide-property-explorer.streamlit.app](https://adelaide-property-explorer.streamlit.app/)**
+```bash
+streamlit run app_presentation.py --server.address 0.0.0.0 --server.port 8502
+```
 
-Deployed on [Streamlit Community Cloud](https://streamlit.io/cloud).
+## Railway Deployment
+
+This project is intended to run on Railway as a Python Streamlit service.
+
+Use this Railway start command:
+
+```bash
+streamlit run app_presentation.py --server.address 0.0.0.0 --server.port $PORT
+```
+
+Recommended Railway scale setting for this dashboard:
+
+- 1 region
+- 1 replica
+- choose the region closest to the target users
 
 ## Project Structure
 
 ```
 adelaide-property-dashboard/
-├── app.py                          # Main Streamlit application
+├── app_presentation.py             # Presentation-focused Streamlit application for deployment
+├── app.py                          # Original Streamlit application
 ├── requirements.txt                # Python dependencies
 ├── adelaide_suburbs.geojson        # Suburb boundary polygons
 ├── suburb_coordinates.json         # Suburb lat/lng centroids
