@@ -9,7 +9,7 @@ Dashboard link: https://sapropertyinsights.com/
 ## Features
 
 - **Overview** - Quick-search suburb rankings, executive snapshot, risk-return landscape
-- **Explore Suburb** - Price history, next-year forecast, risk, rent, crime, and community details
+- **Explore Suburb** - Price history, sales count, next-year forecast, risk, rent, crime, and community details
 - **Compare Suburbs** - Side-by-side suburb comparison across key investment metrics
 - **Opportunity Finder** - Filtered shortlist for growth, yield, risk, and affordability signals
 - **Map Lab** - Interactive suburb map with switchable metrics
@@ -26,7 +26,7 @@ Dashboard link: https://sapropertyinsights.com/
 
 | Source | Period | Description |
 |--------|--------|-------------|
-| SA Property Sales | Q1 2019 - Q1 2026 | 29 quarters, 414 suburbs, median prices |
+| SA Property Sales | Q1 2019 - Q1 2026 | 29 quarters, 414 suburbs, median prices and sales counts |
 | ABS Census 2021 | 2021 | Demographics, income, rent, household data |
 | SA Government Crime | FY 2019-20 to Q2 2025-26 | Crime counts by type and suburb |
 | ML Predictions | Latest property snapshot plus next-year forecast | Ridge Regression model (3 scenarios) |
@@ -40,8 +40,11 @@ Latest copied outputs were refreshed on **23 April 2026** from the analysis proj
 - Main dashboard dataset: `data/clean/master_dataset_by_suburb.csv`
 - Property time series: `data/clean/property_timeseries_2019_2025.csv`
 - Prediction output: `data/predictions/price_predictions_2025_2026.csv`
+- Sales activity fields: `Current_Sales_Count`, `Avg_Sales_Count`, `Total_Sales_Count`, `Market_Liquidity_Category`
 
 Some filenames still contain `2025` or `2025_2026` because the Streamlit app expects those paths. The file contents are the refreshed latest outputs.
+
+Sales count is displayed as dashboard context only. It was tested as a prediction feature in the analysis project, but it slightly reduced model validation performance, so the final Ridge model keeps the stronger no-sales feature set while the dashboard still shows sales volume and liquidity.
 
 ## Tech Stack
 
@@ -91,10 +94,10 @@ adelaide-property-dashboard/
 ├── suburb_coordinates.json         # Suburb lat/lng centroids
 └── data/
     ├── clean/
-    │   ├── master_dataset_by_suburb.csv      # 414 suburbs, 1093 features
-    │   └── property_timeseries_2019_2025.csv # Quarterly price history through Q1 2026
+    │   ├── master_dataset_by_suburb.csv      # 414 suburbs, 1102 features incl. sales count
+    │   └── property_timeseries_2019_2025.csv # Quarterly price and sales history through Q1 2026
     ├── predictions/
-    │   └── price_predictions_2025_2026.csv   # Refreshed ML predictions and forecast fields
+    │   └── price_predictions_2025_2026.csv   # Refreshed ML predictions, forecast, and sales context
     ├── risk_analysis/
     │   └── complete_risk_analysis.csv        # Investment risk scores
     ├── rental/

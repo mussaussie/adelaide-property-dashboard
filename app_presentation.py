@@ -36,6 +36,15 @@ MASTER_COLS = [
     "Max_Price_Ever",
     "Price_Volatility",
     "Quarter_Count",
+    "Current_Sales_Count",
+    "Avg_Sales_Count",
+    "Median_Sales_Count",
+    "Min_Sales_Count",
+    "Max_Sales_Count",
+    "Total_Sales_Count",
+    "Sales_Count_Volatility",
+    "Low_Sales_Flag",
+    "Market_Liquidity_Category",
     "Current_Price_2025",
     "First_Price_2019",
     "Price_Growth_Amount",
@@ -94,6 +103,13 @@ RISK_COLS = [
     "Total_Risk_Category",
     "Risk_Adjusted_Return",
     "Investment_Strategy",
+    "Current_Sales_Count",
+    "Avg_Sales_Count",
+    "Median_Sales_Count",
+    "Total_Sales_Count",
+    "Sales_Count_Volatility",
+    "Low_Sales_Flag",
+    "Market_Liquidity_Category",
 ]
 
 RENTAL_COLS = [
@@ -131,7 +147,7 @@ CULTURE_COLS = [
 ]
 
 CRIME_COLS = ["Suburb", "No_of_Crimes", "Crime_Type_1", "Crime_Type_2", "Crime_Type_3"]
-TS_COLS = ["Suburb", "Median_Price", "Period", "Quarter", "Year"]
+TS_COLS = ["Suburb", "Median_Price", "Sales_Count", "Period", "Quarter", "Year"]
 
 METRIC_OPTIONS = {
     "Latest price": ("Current_Price_2025", "Price", "price"),
@@ -139,6 +155,7 @@ METRIC_OPTIONS = {
     "Next-year growth": ("Expected_Growth_2026", "Growth %", "growth"),
     "Risk score": ("Total_Risk_Score", "Risk", "risk"),
     "House yield": ("Actual_House_Yield", "Yield %", "yield"),
+    "Sales count": ("Current_Sales_Count", "Q1 2026 sales", "sales"),
     "Crime rate": ("Crime_Rate_Per_1000", "Crime / 1k", "risk"),
     "Cultural diversity": ("Cultural_Diversity_Index", "Diversity", "diversity"),
 }
@@ -168,6 +185,7 @@ PALETTES = {
     "risk": ["#e3f2e3", "#f1daa0", "#eea35f", "#d9654f", "#9f2f3c"],
     "yield": ["#f6efe3", "#ead6a5", "#d2ab59", "#987a2e", "#59491f"],
     "diversity": ["#eef2f1", "#cad8d7", "#8fb7b5", "#4d918d", "#21635f"],
+    "sales": ["#f3efe7", "#dcc6a4", "#bd9362", "#8c6437", "#563c24"],
 }
 
 
@@ -623,6 +641,21 @@ def load_data() -> tuple[pd.DataFrame, pd.DataFrame]:
     for source in (risk, rental, culture, crime):
         df = merge_new_columns(df, source)
 
+    sales_defaults = {
+        "Current_Sales_Count": np.nan,
+        "Avg_Sales_Count": np.nan,
+        "Median_Sales_Count": np.nan,
+        "Min_Sales_Count": np.nan,
+        "Max_Sales_Count": np.nan,
+        "Total_Sales_Count": np.nan,
+        "Sales_Count_Volatility": np.nan,
+        "Low_Sales_Flag": np.nan,
+        "Market_Liquidity_Category": "N/A",
+    }
+    for col, default in sales_defaults.items():
+        if col not in df.columns:
+            df[col] = default
+
     if "Crime_Rate_Per_1000" not in df.columns:
         if {"Total_Crime_Count", "G01_Population_Total"}.issubset(df.columns):
             df["Crime_Rate_Per_1000"] = np.where(
@@ -656,6 +689,8 @@ def load_data() -> tuple[pd.DataFrame, pd.DataFrame]:
     if not ts.empty:
         ts["Year"] = pd.to_numeric(ts["Year"], errors="coerce")
         ts["Median_Price"] = pd.to_numeric(ts["Median_Price"], errors="coerce")
+        if "Sales_Count" in ts.columns:
+            ts["Sales_Count"] = pd.to_numeric(ts["Sales_Count"], errors="coerce")
         ts = ts.dropna(subset=["Suburb", "Year", "Median_Price"]).copy()
         ts["Year"] = ts["Year"].astype(int)
 
@@ -986,6 +1021,7 @@ def risk_return_scatter(data: pd.DataFrame) -> go.Figure:
             "Total_Risk_Score": ":.1f",
             "Expected_Growth_2026": ":.1f",
             "Actual_House_Yield": ":.1f" if "Actual_House_Yield" in plot.columns else False,
+            "Current_Sales_Count": ":,.0f" if "Current_Sales_Count" in plot.columns else False,
         },
         labels=DISPLAY_COLUMN_LABELS,
         color_discrete_sequence=["#176b5b", "#285f96", "#c94e3f", "#a87922", "#5b6573"],
@@ -1127,6 +1163,8 @@ def format_dashboard_table(table: pd.DataFrame) -> pd.DataFrame:
             out[col] = out[col].apply(fmt_pct)
         elif "Price" in col or "Rent" in col or col in {"Value_Gap"}:
             out[col] = out[col].apply(fmt_price)
+        elif "Sales" in col:
+            out[col] = out[col].apply(lambda value: fmt_num(value, 0))
         elif "Score" in col or "Rate" in col:
             out[col] = out[col].apply(lambda value: fmt_num(value, 1))
     return out.rename(columns=DISPLAY_COLUMN_LABELS)
@@ -1226,6 +1264,8 @@ def format_metric_for_col(col: str, value: float | int | None) -> str:
         return fmt_price(value)
     if col in {"Price_Growth_Percent", "Expected_Growth_2026", "Actual_House_Yield"}:
         return fmt_pct(value)
+    if col == "Current_Sales_Count":
+        return fmt_num(value, 0)
     if col == "Cultural_Diversity_Index":
         return fmt_num(value, 3)
     return fmt_num(value, 1)
@@ -1311,6 +1351,7 @@ def generate_insight_pdf(suburb: str, row: pd.Series, ts: pd.DataFrame) -> bytes
     pdf_metric(pdf, "Latest price", fmt_price(row.get("Current_Price_2025")))
     pdf_metric(pdf, "Next-Year Forecast", fmt_price(row.get("Forecast_Price_2026")))
     pdf_metric(pdf, "Next-year growth", fmt_pct(row.get("Expected_Growth_2026")))
+    pdf_metric(pdf, "Latest sales count", f"{fmt_num(row.get('Current_Sales_Count'), 0)} sales ({safe_text(row.get('Market_Liquidity_Category', 'N/A'))})")
     pdf_metric(pdf, "Strategy", str(row.get("Investment_Strategy", "N/A")))
     pdf_metric(pdf, "Risk verdict", risk_plain_language(row))
     pdf_metric(pdf, "Rental verdict", rent_plain_language(row))
@@ -1370,6 +1411,7 @@ def generate_insight_docx(suburb: str, row: pd.Series, ts: pd.DataFrame) -> byte
         ("Latest price", fmt_price(row.get("Current_Price_2025"))),
         ("Next-Year Forecast", fmt_price(row.get("Forecast_Price_2026"))),
         ("Next-year growth", fmt_pct(row.get("Expected_Growth_2026"))),
+        ("Latest sales count", f"{fmt_num(row.get('Current_Sales_Count'), 0)} sales ({safe_text(row.get('Market_Liquidity_Category', 'N/A'))})"),
         ("Strategy", str(row.get("Investment_Strategy", "N/A"))),
         ("Risk verdict", risk_plain_language(row)),
         ("Rental verdict", rent_plain_language(row)),
@@ -1455,6 +1497,7 @@ def render_rank_cards(data: pd.DataFrame, top_n: int = 5, grid_cols: int = 1) ->
             f'<span class="pill teal">{fmt_price(row.get("Current_Price_2025"))}</span>',
             f'<span class="pill">{fmt_pct(row.get("Expected_Growth_2026"))} next-year growth</span>',
             f'<span class="pill amber">{fmt_pct(row.get("Actual_House_Yield"))} yield</span>',
+            f'<span class="pill">{fmt_num(row.get("Current_Sales_Count"), 0)} sales</span>',
             f'<span class="pill coral">{safe_text(row.get("Total_Risk_Category", "N/A"))}</span>',
         ]
         html = f"""
@@ -1490,12 +1533,13 @@ def render_overview(df: pd.DataFrame, ts: pd.DataFrame, view: pd.DataFrame) -> N
         unsafe_allow_html=True,
     )
 
-    c1, c2, c3, c4, c5 = st.columns(5)
+    c1, c2, c3, c4, c5, c6 = st.columns(6)
     c1.markdown(card("Suburbs loaded", fmt_num(len(df)), "Full master dataset", "teal"), unsafe_allow_html=True)
     c2.markdown(card("Full-price suburbs", fmt_num(valid["Current_Price_2025"].notna().sum()), "Latest price available", "blue"), unsafe_allow_html=True)
     c3.markdown(card("Median price", fmt_price(valid["Current_Price_2025"].median()), "Across active filters", "amber"), unsafe_allow_html=True)
-    c4.markdown(card("Median 29-quarter growth", fmt_pct(valid["Price_Growth_Percent"].median()), "Q1 2019 to Q1 2026", "teal"), unsafe_allow_html=True)
-    c5.markdown(card("Median risk score", fmt_num(valid["Total_Risk_Score"].median(), 1), "Lower is safer", "coral"), unsafe_allow_html=True)
+    c4.markdown(card("Median sales", fmt_num(valid["Current_Sales_Count"].median(), 0), "Q1 2026 sales count", "blue"), unsafe_allow_html=True)
+    c5.markdown(card("Median 29-quarter growth", fmt_pct(valid["Price_Growth_Percent"].median()), "Q1 2019 to Q1 2026", "teal"), unsafe_allow_html=True)
+    c6.markdown(card("Median risk score", fmt_num(valid["Total_Risk_Score"].median(), 1), "Lower is safer", "coral"), unsafe_allow_html=True)
 
     section("Quick searches", "Click once to surface common suburb lists.")
     if "overview_action" not in st.session_state:
@@ -1505,6 +1549,7 @@ def render_overview(df: pd.DataFrame, ts: pd.DataFrame, view: pd.DataFrame) -> N
         ("Best opportunities", "Opportunity_Score", False, "Investment shortlist"),
         ("Most growing", "Price_Growth_Percent", False, "Highest Q1 2019 to Q1 2026 growth"),
         ("Highest next-year growth", "Expected_Growth_2026", False, "Highest next-year model growth"),
+        ("Most sales", "Current_Sales_Count", False, "Highest Q1 2026 sales activity"),
         ("Best yield", "Actual_House_Yield", False, "Highest estimated house yield"),
         ("Lowest risk", "Total_Risk_Score", True, "Lowest total risk score"),
         ("Highest crime", "Crime_Rate_Per_1000", False, "Highest crimes per 1,000 people"),
@@ -1522,6 +1567,7 @@ def render_overview(df: pd.DataFrame, ts: pd.DataFrame, view: pd.DataFrame) -> N
     action_columns = [
         "Suburb",
         "Current_Price_2025",
+        "Current_Sales_Count",
         sort_col,
         "Expected_Growth_2026",
         "Actual_House_Yield",
@@ -1579,6 +1625,8 @@ def render_explore(df: pd.DataFrame, ts: pd.DataFrame, suburb: str) -> None:
             <strong>{fmt_price(row.get("Current_Price_2025"))}</strong>, with
             <strong>{fmt_pct(row.get("Price_Growth_Percent"))}</strong> growth from Q1 2019 to Q1 2026 and
             a next-year forecast of <strong>{fmt_price(row.get("Forecast_Price_2026"))}</strong>.
+            Latest-quarter sales count is <strong>{fmt_num(row.get("Current_Sales_Count"), 0)}</strong>
+            with <strong>{safe_text(row.get("Market_Liquidity_Category", "N/A"))}</strong> liquidity.
             The model classifies it as <strong>{risk}</strong> with strategy:
             <strong>{strategy}</strong>.
         </div>
@@ -1586,11 +1634,12 @@ def render_explore(df: pd.DataFrame, ts: pd.DataFrame, suburb: str) -> None:
         unsafe_allow_html=True,
     )
 
-    c1, c2, c3, c4 = st.columns(4)
+    c1, c2, c3, c4, c5 = st.columns(5)
     c1.markdown(card("Latest price", fmt_price(row.get("Current_Price_2025")), "Q1 2026 median", "teal"), unsafe_allow_html=True)
-    c2.markdown(card("Next-Year Forecast", fmt_price(row.get("Forecast_Price_2026")), fmt_pct(row.get("Expected_Growth_2026")), "blue"), unsafe_allow_html=True)
-    c3.markdown(card("House yield", fmt_pct(row.get("Actual_House_Yield")), safe_text(row.get("Affordability_Category", "N/A")), "amber"), unsafe_allow_html=True)
-    c4.markdown(card("Risk score", fmt_num(row.get("Total_Risk_Score"), 1), safe_text(row.get("Total_Risk_Category", "N/A")), "coral"), unsafe_allow_html=True)
+    c2.markdown(card("Sales count", fmt_num(row.get("Current_Sales_Count"), 0), safe_text(row.get("Market_Liquidity_Category", "N/A")), "blue"), unsafe_allow_html=True)
+    c3.markdown(card("Next-Year Forecast", fmt_price(row.get("Forecast_Price_2026")), fmt_pct(row.get("Expected_Growth_2026")), "blue"), unsafe_allow_html=True)
+    c4.markdown(card("House yield", fmt_pct(row.get("Actual_House_Yield")), safe_text(row.get("Affordability_Category", "N/A")), "amber"), unsafe_allow_html=True)
+    c5.markdown(card("Risk score", fmt_num(row.get("Total_Risk_Score"), 1), safe_text(row.get("Total_Risk_Category", "N/A")), "coral"), unsafe_allow_html=True)
 
     tab_growth, tab_risk, tab_crime, tab_people, tab_download = st.tabs([
         "Growth and forecast",
@@ -1628,11 +1677,12 @@ def render_explore(df: pd.DataFrame, ts: pd.DataFrame, suburb: str) -> None:
                     unsafe_allow_html=True,
                 )
             st.plotly_chart(yoy_fig, use_container_width=True)
-        subcols = st.columns(3)
+        subcols = st.columns(4)
         subcols[0].markdown(card("Price volatility", fmt_num(row.get("Price_Volatility"), 0), "Std deviation", "blue"), unsafe_allow_html=True)
+        subcols[1].markdown(card("Avg sales", fmt_num(row.get("Avg_Sales_Count"), 0), "Average quarterly sales", "blue"), unsafe_allow_html=True)
         gap_value, gap_note = value_gap_note(row.get("Value_Gap_Percent"), row.get("Value_Category", "N/A"))
-        subcols[1].markdown(card("Model price gap", gap_value, gap_note, "teal"), unsafe_allow_html=True)
-        subcols[2].markdown(card("Prediction error", fmt_pct(row.get("Error_Percent")), "Latest model check", "amber"), unsafe_allow_html=True)
+        subcols[2].markdown(card("Model price gap", gap_value, gap_note, "teal"), unsafe_allow_html=True)
+        subcols[3].markdown(card("Prediction error", fmt_pct(row.get("Error_Percent")), "Latest model check", "amber"), unsafe_allow_html=True)
         st.markdown(
             """
             <div class="note-box">
@@ -1836,6 +1886,8 @@ def render_compare(df: pd.DataFrame, ts: pd.DataFrame, suburbs: list[str]) -> No
     metrics = [
         "Suburb",
         "Current_Price_2025",
+        "Current_Sales_Count",
+        "Market_Liquidity_Category",
         "Price_Growth_Percent",
         "Expected_Growth_2026",
         "Total_Risk_Score",
@@ -1879,21 +1931,22 @@ def render_opportunities(df: pd.DataFrame) -> None:
         unsafe_allow_html=True,
     )
     with st.container(border=True):
-        controls = st.columns([1, 1, 1, 0.8])
+        controls = st.columns([1, 1, 1, 1, 0.8])
         max_budget = controls[0].number_input("Maximum budget", min_value=0, value=1_200_000, step=50_000)
-        min_growth = controls[1].number_input(
+        min_sales = controls[1].number_input("Minimum Q1 2026 sales", min_value=0, value=0, step=1)
+        min_growth = controls[2].number_input(
             "Minimum next-year growth %",
             value=0.0,
             step=1.0,
             help="Only show suburbs where the model expects at least this much next-year price growth.",
         )
-        min_yield = controls[2].number_input(
+        min_yield = controls[3].number_input(
             "Minimum house yield %",
             value=0.0,
             step=0.25,
             help="Only show suburbs where estimated yearly rent is at least this percentage of the property price.",
         )
-        hide_high_risk = controls[3].toggle("Hide high risk", value=True)
+        hide_high_risk = controls[4].toggle("Hide high risk", value=True)
         st.caption(
             "Example: 5% next-year growth means the model expects the price to rise by at least 5%. "
             "A 3.5% house yield means annual rent is about 3.5% of the property price."
@@ -1901,6 +1954,7 @@ def render_opportunities(df: pd.DataFrame) -> None:
 
     filtered = valid[
         (valid["Current_Price_2025"] <= max_budget)
+        & (valid["Current_Sales_Count"].fillna(0) >= min_sales)
         & (valid["Expected_Growth_2026"].fillna(-999) >= min_growth)
         & (valid["Actual_House_Yield"].fillna(-999) >= min_yield)
     ].copy()
@@ -1911,7 +1965,7 @@ def render_opportunities(df: pd.DataFrame) -> None:
     c1.markdown(card("Matches", fmt_num(len(filtered)), "After filters", "teal"), unsafe_allow_html=True)
     c2.markdown(card("Median price", fmt_price(filtered["Current_Price_2025"].median()), "Filtered suburbs", "blue"), unsafe_allow_html=True)
     c3.markdown(card("Median next-year growth", fmt_pct(filtered["Expected_Growth_2026"].median()), "Model expectation", "amber"), unsafe_allow_html=True)
-    c4.markdown(card("Median yield", fmt_pct(filtered["Actual_House_Yield"].median()), "House yield", "coral"), unsafe_allow_html=True)
+    c4.markdown(card("Median sales", fmt_num(filtered["Current_Sales_Count"].median(), 0), "Q1 2026 sales count", "coral"), unsafe_allow_html=True)
 
     section("Best matches")
     render_rank_cards(filtered, 6, grid_cols=3)
@@ -1928,6 +1982,7 @@ def render_opportunities(df: pd.DataFrame) -> None:
             "Current_Price_2025",
             "Opportunity_Score",
             "Expected_Growth_2026",
+            "Current_Sales_Count",
             "Actual_House_Yield",
             "Total_Risk_Score",
             "Total_Risk_Category",
@@ -1969,7 +2024,7 @@ def render_map_lab(df: pd.DataFrame, ts: pd.DataFrame, geojson: dict | None, coo
     metric_col = METRIC_OPTIONS[metric_label][0]
     with col:
         section("Highest suburbs for selected metric")
-        table = ranked_table(df, metric_col, ["Suburb", metric_col, "Current_Price_2025", "Total_Risk_Category"], 12)
+        table = ranked_table(df, metric_col, ["Suburb", metric_col, "Current_Price_2025", "Current_Sales_Count", "Total_Risk_Category"], 12)
         st.dataframe(format_dashboard_table(table), use_container_width=True, hide_index=True)
     with detail_col:
         selected = st.session_state.get("map_detail_suburb")
@@ -1982,7 +2037,8 @@ def render_map_lab(df: pd.DataFrame, ts: pd.DataFrame, geojson: dict | None, coo
                     <strong>{safe_text(selected)}</strong><br>
                     Latest price: <strong>{fmt_price(row.get("Current_Price_2025"))}</strong> |
                     Growth: <strong>{fmt_pct(row.get("Price_Growth_Percent"))}</strong> |
-                    Risk: <strong>{safe_text(row.get("Total_Risk_Category", "N/A"))}</strong><br>
+                    Risk: <strong>{safe_text(row.get("Total_Risk_Category", "N/A"))}</strong> |
+                    Sales: <strong>{fmt_num(row.get("Current_Sales_Count"), 0)}</strong><br>
                     Strategy: <strong>{safe_text(row.get("Investment_Strategy", "N/A"))}</strong>
                 </div>
                 """,
@@ -2008,11 +2064,12 @@ def render_methodology(df: pd.DataFrame, ts: pd.DataFrame) -> None:
         "What this app uses, where the outputs come from, and how to explain missing values.",
         "Project notes",
     )
-    c1, c2, c3, c4 = st.columns(4)
+    c1, c2, c3, c4, c5 = st.columns(5)
     c1.markdown(card("Master suburbs", fmt_num(len(df)), "Base analysis rows", "teal"), unsafe_allow_html=True)
     c2.markdown(card("Time series rows", fmt_num(len(ts)), "29 property quarters", "blue"), unsafe_allow_html=True)
     c3.markdown(card("Prediction rows", fmt_num(df["Predicted_Price_2025"].notna().sum()), "Suburbs with ML output", "amber"), unsafe_allow_html=True)
-    c4.markdown(card("Rental rows", fmt_num(df["Actual_House_Yield"].notna().sum()), "Suburbs with rental analysis", "coral"), unsafe_allow_html=True)
+    c4.markdown(card("Sales rows", fmt_num(df["Current_Sales_Count"].notna().sum()), "Q1 2026 sales count", "blue"), unsafe_allow_html=True)
+    c5.markdown(card("Rental rows", fmt_num(df["Actual_House_Yield"].notna().sum()), "Suburbs with rental analysis", "coral"), unsafe_allow_html=True)
 
     st.markdown(
         """
@@ -2034,6 +2091,7 @@ def render_methodology(df: pd.DataFrame, ts: pd.DataFrame) -> None:
                 "Latest price",
                 "Prediction and risk",
                 "Rental and yield",
+                "Current sales count",
                 "Cultural demographics",
                 "Crime offense analysis",
             ],
@@ -2041,10 +2099,11 @@ def render_methodology(df: pd.DataFrame, ts: pd.DataFrame) -> None:
                 df["Current_Price_2025"].notna().sum(),
                 df["Predicted_Price_2025"].notna().sum(),
                 df["Actual_House_Yield"].notna().sum(),
+                df["Current_Sales_Count"].notna().sum(),
                 df["Cultural_Diversity_Index"].notna().sum(),
                 df["Crime_Type_1"].notna().sum(),
             ],
-            "Total suburbs": [len(df)] * 5,
+            "Total suburbs": [len(df)] * 6,
         }
     )
     coverage["Coverage %"] = coverage["Available suburbs"] / coverage["Total suburbs"] * 100
@@ -2076,6 +2135,8 @@ def render_glossary() -> None:
         ("Crime / 1k", "Recorded crimes per 1,000 residents. This helps compare suburbs with different population sizes."),
         ("Prediction error", "How far the model's predicted latest price was from the latest observed price."),
         ("Price volatility", "How much prices have moved around over time. Higher volatility means less stable price history."),
+        ("Sales count", "The number of properties sold in the latest quarter. Higher sales count means the median price is based on more transactions and is usually more reliable."),
+        ("Market liquidity", "A simple Low, Moderate, or High category based on latest-quarter sales volume."),
     ]
     left, right = st.columns([1, 1])
     for idx, (term, meaning) in enumerate(terms):
