@@ -153,6 +153,7 @@ DISPLAY_COLUMN_LABELS = {
     "Price_Growth_Percent": "Q1 2019 to Q1 2026 Growth",
     "Expected_Growth_2026": "Next-Year Growth",
     "Actual_House_Yield": "House Yield",
+    "Indian_Percent": "Indian Community Share",
     "Crime_Rate_Per_1000": "Crime / 1k",
     "Total_Risk_Category": "Risk Category",
     "Total_Risk_Score": "Risk Score",
@@ -1115,11 +1116,17 @@ def ranked_table(data: pd.DataFrame, sort_col: str, columns: list[str], top_n: i
 
 def format_dashboard_table(table: pd.DataFrame) -> pd.DataFrame:
     out = table.copy()
+    percent_cols = {
+        "Price_Growth_Percent",
+        "Expected_Growth_2026",
+        "Actual_House_Yield",
+        "Indian_Percent",
+    }
     for col in out.columns:
-        if "Price" in col or "Rent" in col or col in {"Value_Gap"}:
-            out[col] = out[col].apply(fmt_price)
-        elif "Growth" in col or "Yield" in col or "Percent" in col or "Return" in col:
+        if col in percent_cols or "Growth" in col or "Yield" in col or "Percent" in col or "Return" in col:
             out[col] = out[col].apply(fmt_pct)
+        elif "Price" in col or "Rent" in col or col in {"Value_Gap"}:
+            out[col] = out[col].apply(fmt_price)
         elif "Score" in col or "Rate" in col:
             out[col] = out[col].apply(lambda value: fmt_num(value, 1))
     return out.rename(columns=DISPLAY_COLUMN_LABELS)
@@ -1502,19 +1509,20 @@ def render_overview(df: pd.DataFrame, ts: pd.DataFrame, view: pd.DataFrame) -> N
     selected_action = next((item for item in actions if item[0] == st.session_state.overview_action), actions[0])
     action_label, sort_col, ascending, action_note = selected_action
     section(action_label, action_note)
+    action_columns = [
+        "Suburb",
+        "Current_Price_2025",
+        sort_col,
+        "Expected_Growth_2026",
+        "Actual_House_Yield",
+        "Crime_Rate_Per_1000",
+        "Total_Risk_Category",
+        "Investment_Strategy",
+    ]
     action_table = ranked_table(
         valid,
         sort_col,
-        [
-            "Suburb",
-            "Current_Price_2025",
-            sort_col,
-            "Expected_Growth_2026",
-            "Actual_House_Yield",
-            "Crime_Rate_Per_1000",
-            "Total_Risk_Category",
-            "Investment_Strategy",
-        ],
+        action_columns,
         12,
         ascending=ascending,
     )
