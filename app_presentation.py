@@ -172,7 +172,7 @@ PALETTES = {
 
 
 st.set_page_config(
-    page_title="Adelaide Property Decision Dashboard",
+    page_title="SA Property Insights | Adelaide Property Dashboard",
     page_icon="AP",
     layout="wide",
     initial_sidebar_state="collapsed",
@@ -1302,7 +1302,7 @@ def generate_insight_pdf(suburb: str, row: pd.Series, ts: pd.DataFrame) -> bytes
     pdf.cell(0, 10, plain_text(f"{suburb} Property Insight Report"), new_x=XPos.LMARGIN, new_y=YPos.NEXT, align="C")
     pdf.set_font("Helvetica", "", 9)
     pdf.set_text_color(100, 113, 129)
-    pdf.cell(0, 7, "Generated from Adelaide Property Decision Dashboard", new_x=XPos.LMARGIN, new_y=YPos.NEXT, align="C")
+    pdf.cell(0, 7, "Generated from SA Property Insights", new_x=XPos.LMARGIN, new_y=YPos.NEXT, align="C")
     pdf.ln(4)
 
     pdf.set_text_color(24, 34, 47)
@@ -1363,7 +1363,7 @@ def generate_insight_pdf(suburb: str, row: pd.Series, ts: pd.DataFrame) -> bytes
 def generate_insight_docx(suburb: str, row: pd.Series, ts: pd.DataFrame) -> bytes:
     doc = Document()
     doc.add_heading(f"{suburb} Property Insight Report", 0)
-    doc.add_paragraph("Generated from Adelaide Property Decision Dashboard")
+    doc.add_paragraph("Generated from SA Property Insights")
 
     doc.add_heading("Key insights", level=1)
     for label, value in [
@@ -1476,8 +1476,18 @@ def render_rank_cards(data: pd.DataFrame, top_n: int = 5, grid_cols: int = 1) ->
 def render_overview(df: pd.DataFrame, ts: pd.DataFrame, view: pd.DataFrame) -> None:
     valid = view[view["Current_Price_2025"].notna()].copy()
     title_block(
-        "Adelaide Property Decision Dashboard",
-        "Updated 23 April 2026 with 414 suburbs, 29 property quarters, Q1 2026 latest property prices, and crime records through 31 December 2025.",
+        "SA Property Insights",
+        "Adelaide suburb property dashboard for prices, growth, rent, crime, risk, and community data. Updated 23 April 2026 with 414 suburbs, 29 property quarters, Q1 2026 latest property prices, and crime records through 31 December 2025.",
+    )
+    st.markdown(
+        """
+        <div class="note-box">
+            SA Property Insights is an Adelaide property dashboard for South Australia suburb property insights,
+            combining latest property prices, Q1 2019 to Q1 2026 growth, rental yield, crime data, risk scores,
+            community demographics, and next-year forecast signals in one searchable Streamlit app.
+        </div>
+        """,
+        unsafe_allow_html=True,
     )
 
     c1, c2, c3, c4, c5 = st.columns(5)
@@ -2092,8 +2102,8 @@ def main() -> None:
 
     suburbs = sorted(df["Suburb"].dropna().unique().tolist())
     with st.sidebar:
-        st.markdown("### Adelaide dashboard")
-        st.caption("Presentation-focused Streamlit app")
+        st.markdown("### SA Property Insights")
+        st.caption("Adelaide property dashboard")
         page = st.radio(
             "View",
             ["Overview", "Explore suburb", "Compare suburbs", "Opportunity finder", "Map lab", "Methodology", "Glossary"],
