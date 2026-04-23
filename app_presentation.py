@@ -119,8 +119,25 @@ RENTAL_COLS = [
     "Fair_House_Rent_2025",
     "Fair_Unit_Rent_2025",
     "Estimated_Actual_Rent_2025",
+    "Actual_Market_Rent_2025",
     "Actual_House_Rent_2025",
     "Actual_Unit_Rent_2025",
+    "Actual_Rent_Source",
+    "Latest_Total_Bond_Count",
+    "Latest_Total_Rent_Period",
+    "Latest_Total_Rent_Confidence",
+    "Latest_House_Bond_Count",
+    "Latest_House_Rent_Period",
+    "Latest_House_Rent_Confidence",
+    "Latest_Unit_Bond_Count",
+    "Latest_Unit_Rent_Period",
+    "Latest_Unit_Rent_Confidence",
+    "Market_Rent_Premium_Weekly",
+    "Market_Rent_Premium_Percent",
+    "House_Market_Rent_Premium_Weekly",
+    "House_Market_Rent_Premium_Percent",
+    "Unit_Market_Rent_Premium_Weekly",
+    "Unit_Market_Rent_Premium_Percent",
     "Greediness_Percent",
     "Fair_House_Yield",
     "Actual_House_Yield",
@@ -784,20 +801,27 @@ def risk_plain_language(row: pd.Series) -> str:
 def rent_plain_language(row: pd.Series) -> str:
     fair_rent = row.get("Fair_House_Rent_2025")
     actual_rent = row.get("Actual_House_Rent_2025")
-    greed = row.get("Greediness_Percent")
+    premium_pct = row.get("House_Market_Rent_Premium_Percent")
+    if pd.isna(premium_pct):
+        premium_pct = row.get("Market_Rent_Premium_Percent")
     affordability = row.get("Affordability_Category", "N/A")
+    confidence = row.get("Latest_Total_Rent_Confidence", "N/A")
+    bond_count = row.get("Latest_Total_Bond_Count")
     if pd.isna(fair_rent) or pd.isna(actual_rent):
-        return "Rental estimate is unavailable for this suburb."
+        return "Rental bond rent is unavailable for this suburb."
     difference = actual_rent - fair_rent
-    if pd.isna(greed):
-        gap_text = f"about {fmt_money(difference)} per week above the fair-rent estimate"
-    elif greed > 10:
-        gap_text = f"about {fmt_pct(greed)} above the fair-rent estimate"
-    elif greed < -5:
-        gap_text = f"below the fair-rent estimate by about {fmt_pct(abs(greed))}"
+    if pd.isna(premium_pct):
+        gap_text = f"about {fmt_money(difference)} per week above the fair baseline"
+    elif premium_pct > 10:
+        gap_text = f"about {fmt_pct(premium_pct)} above the fair baseline"
+    elif premium_pct < -5:
+        gap_text = f"below the fair baseline by about {fmt_pct(abs(premium_pct))}"
     else:
-        gap_text = "close to the fair-rent estimate"
-    return f"Estimated market rent is {gap_text}. Affordability category: {affordability}."
+        gap_text = "close to the fair baseline"
+    bond_text = ""
+    if not pd.isna(bond_count):
+        bond_text = f" Bond confidence: {safe_text(confidence)} from {fmt_num(bond_count, 0)} lodged bonds."
+    return f"Rental bond market rent is {gap_text}. Affordability category: {affordability}.{bond_text}"
 
 
 def safe_text(value: object) -> str:
@@ -1071,7 +1095,7 @@ def risk_breakdown_chart(row: pd.Series) -> go.Figure:
 def rent_comparison_chart(row: pd.Series) -> go.Figure:
     rent = pd.DataFrame(
         {
-            "Rent type": ["2021 census rent", "Fair rent estimate", "Market rent estimate"],
+            "Rent type": ["2021 Census baseline", "Fair baseline (2021 + 30%)", "Rental bond market rent"],
             "Weekly rent": [
                 row.get("Census_Rent_2021"),
                 row.get("Fair_House_Rent_2025"),
@@ -1152,18 +1176,44 @@ def ranked_table(data: pd.DataFrame, sort_col: str, columns: list[str], top_n: i
 
 def format_dashboard_table(table: pd.DataFrame) -> pd.DataFrame:
     out = table.copy()
+    text_cols = {
+        "Suburb",
+        "Latest_Total_Rent_Confidence",
+        "Latest_House_Rent_Confidence",
+        "Latest_Unit_Rent_Confidence",
+        "Total_Risk_Category",
+        "Investment_Strategy",
+        "Market_Liquidity_Category",
+        "Affordability_Category",
+    }
     percent_cols = {
         "Price_Growth_Percent",
         "Expected_Growth_2026",
         "Actual_House_Yield",
+        "Actual_Unit_Yield",
+        "House_Market_Rent_Premium_Percent",
+        "Market_Rent_Premium_Percent",
         "Indian_Percent",
     }
+    money_cols = {
+        "Current_Price_2025",
+        "Forecast_Price_2026",
+        "Actual_House_Rent_2025",
+        "Actual_Unit_Rent_2025",
+        "Actual_Market_Rent_2025",
+        "Fair_House_Rent_2025",
+        "Fair_Unit_Rent_2025",
+        "Fair_Rent_2025",
+    }
+    count_cols = {"Current_Sales_Count", "Latest_Total_Bond_Count", "Latest_House_Bond_Count", "Latest_Unit_Bond_Count"}
     for col in out.columns:
+        if col in text_cols:
+            continue
         if col in percent_cols or "Growth" in col or "Yield" in col or "Percent" in col or "Return" in col:
             out[col] = out[col].apply(fmt_pct)
-        elif "Price" in col or "Rent" in col or col in {"Value_Gap"}:
+        elif col in money_cols or col in {"Value_Gap"} or "Price" in col:
             out[col] = out[col].apply(fmt_price)
-        elif "Sales" in col:
+        elif col in count_cols or "Sales" in col:
             out[col] = out[col].apply(lambda value: fmt_num(value, 0))
         elif "Score" in col or "Rate" in col:
             out[col] = out[col].apply(lambda value: fmt_num(value, 1))
@@ -1394,7 +1444,7 @@ def generate_insight_pdf(suburb: str, row: pd.Series, ts: pd.DataFrame) -> bytes
         5,
         plain_text(
             "Notes: ABS Census 2021 is used for demographics, income, mortgage, and baseline rent. "
-            "Rental values are estimates adjusted from that baseline. Crime statistics cover FY 2019-20 "
+            "Actual rental values use SA private rental bond report medians. Crime statistics cover FY 2019-20 "
             "through Q2 2025-26, including records through 31 December 2025. Model outputs are decision support, not financial advice."
         ),
     )
@@ -1462,7 +1512,7 @@ def generate_insight_docx(suburb: str, row: pd.Series, ts: pd.DataFrame) -> byte
     doc.add_heading("Notes", level=1)
     doc.add_paragraph(
         "ABS Census 2021 is used for demographics, income, mortgage, and baseline rent. "
-        "Rental values are estimates adjusted from that baseline. Crime statistics cover FY 2019-20 "
+        "Actual rental values use SA private rental bond report medians. Crime statistics cover FY 2019-20 "
         "through Q2 2025-26, including records through 31 December 2025. Model outputs are decision support, not financial advice."
     )
 
@@ -1550,7 +1600,9 @@ def render_overview(df: pd.DataFrame, ts: pd.DataFrame, view: pd.DataFrame) -> N
         ("Most growing", "Price_Growth_Percent", False, "Highest Q1 2019 to Q1 2026 growth"),
         ("Highest next-year growth", "Expected_Growth_2026", False, "Highest next-year model growth"),
         ("Most sales", "Current_Sales_Count", False, "Highest Q1 2026 sales activity"),
-        ("Best yield", "Actual_House_Yield", False, "Highest estimated house yield"),
+        ("Best yield", "Actual_House_Yield", False, "Highest rental bond house yield"),
+        ("Rent premium", "Market_Rent_Premium_Percent", False, "Highest total bond rent above fair baseline"),
+        ("Rent evidence", "Latest_Total_Bond_Count", False, "Most lodged rental bonds behind the rent figure"),
         ("Lowest risk", "Total_Risk_Score", True, "Lowest total risk score"),
         ("Highest crime", "Crime_Rate_Per_1000", False, "Highest crimes per 1,000 people"),
         ("Safest suburbs", "Crime_Rate_Per_1000", True, "Lowest crimes per 1,000 people"),
@@ -1570,7 +1622,12 @@ def render_overview(df: pd.DataFrame, ts: pd.DataFrame, view: pd.DataFrame) -> N
         "Current_Sales_Count",
         sort_col,
         "Expected_Growth_2026",
+        "Actual_House_Rent_2025",
         "Actual_House_Yield",
+        "Market_Rent_Premium_Percent",
+        "House_Market_Rent_Premium_Percent",
+        "Latest_Total_Bond_Count",
+        "Latest_Total_Rent_Confidence",
         "Crime_Rate_Per_1000",
         "Total_Risk_Category",
         "Investment_Strategy",
@@ -1638,7 +1695,7 @@ def render_explore(df: pd.DataFrame, ts: pd.DataFrame, suburb: str) -> None:
     c1.markdown(card("Latest price", fmt_price(row.get("Current_Price_2025")), "Q1 2026 median", "teal"), unsafe_allow_html=True)
     c2.markdown(card("Sales count", fmt_num(row.get("Current_Sales_Count"), 0), safe_text(row.get("Market_Liquidity_Category", "N/A")), "blue"), unsafe_allow_html=True)
     c3.markdown(card("Next-Year Forecast", fmt_price(row.get("Forecast_Price_2026")), fmt_pct(row.get("Expected_Growth_2026")), "blue"), unsafe_allow_html=True)
-    c4.markdown(card("House yield", fmt_pct(row.get("Actual_House_Yield")), safe_text(row.get("Affordability_Category", "N/A")), "amber"), unsafe_allow_html=True)
+    c4.markdown(card("House yield", fmt_pct(row.get("Actual_House_Yield")), "Bond rent yield", "amber"), unsafe_allow_html=True)
     c5.markdown(card("Risk score", fmt_num(row.get("Total_Risk_Score"), 1), safe_text(row.get("Total_Risk_Category", "N/A")), "coral"), unsafe_allow_html=True)
 
     tab_growth, tab_risk, tab_crime, tab_people, tab_download = st.tabs([
@@ -1720,10 +1777,10 @@ def render_explore(df: pd.DataFrame, ts: pd.DataFrame, suburb: str) -> None:
         )
 
         c1, c2, c3, c4 = st.columns(4)
-        c1.markdown(card("Fair rent estimate", fmt_money(row.get("Fair_House_Rent_2025")), "Weekly house rent", "teal"), unsafe_allow_html=True)
-        c2.markdown(card("Market rent estimate", fmt_money(row.get("Actual_House_Rent_2025")), "Estimated weekly rent", "blue"), unsafe_allow_html=True)
-        c3.markdown(card("Rent above fair", fmt_pct(row.get("Greediness_Percent")), "Actual estimate vs fair estimate", "coral"), unsafe_allow_html=True)
-        c4.markdown(card("House yield", fmt_pct(row.get("Actual_House_Yield")), safe_text(row.get("Affordability_Category", "N/A")), "amber"), unsafe_allow_html=True)
+        c1.markdown(card("Fair baseline", fmt_money(row.get("Fair_House_Rent_2025")), "2021 Census + 30%", "teal"), unsafe_allow_html=True)
+        c2.markdown(card("Bond market rent", fmt_money(row.get("Actual_House_Rent_2025")), f"{safe_text(row.get('Latest_Total_Rent_Confidence', 'N/A'))} confidence", "blue"), unsafe_allow_html=True)
+        c3.markdown(card("Market premium", fmt_pct(row.get("Market_Rent_Premium_Percent")), "Total bond rent vs fair baseline", "coral"), unsafe_allow_html=True)
+        c4.markdown(card("House yield", fmt_pct(row.get("Actual_House_Yield")), f"{fmt_num(row.get('Latest_Total_Bond_Count'), 0)} bonds", "amber"), unsafe_allow_html=True)
 
         viz_left, viz_right = st.columns([1, 1])
         with viz_left:
@@ -1735,8 +1792,10 @@ def render_explore(df: pd.DataFrame, ts: pd.DataFrame, suburb: str) -> None:
             """
             <div class="note-box">
                 Plain-English reading: lower risk categories are safer; higher yield is better for rental return.
-                The rent-above-fair figure is not a moral judgement. It shows how much the estimated market rent
-                is above the inflation-adjusted census rent benchmark.
+                The market premium compares SA rental bond median rent with the fair baseline
+                built from 2021 Census rent plus 30% inflation. If the house-only premium is above 80%,
+                treat it as a signal to inspect the baseline: the 2021 Census rent may reflect units, shared rentals,
+                or low-count rentals rather than a comparable detached house.
             </div>
             """,
             unsafe_allow_html=True,
@@ -1834,8 +1893,8 @@ def render_explore(df: pd.DataFrame, ts: pd.DataFrame, suburb: str) -> None:
             """
             <div class="note-box">
                 Census and rent note: population, age, household income, mortgage, cultural demographics,
-                and baseline rent values come from ABS Census 2021. Rental figures shown elsewhere are
-                estimates adjusted forward from that 2021 census baseline.
+                and baseline rent values come from ABS Census 2021. Actual rental figures shown elsewhere use
+                SA private rental bond report medians, with confidence based on lodged bond count.
             </div>
             """,
             unsafe_allow_html=True,
@@ -2119,14 +2178,14 @@ def render_glossary() -> None:
     terms = [
         ("Latest price", "The suburb's latest median property price from the processed property sales data, with Q1 2026 as the latest property quarter."),
         ("Next-year growth", "The model's expected percentage price increase over the next-year forecast period. It is a prediction, not a guarantee."),
-        ("House yield", "Estimated yearly rent divided by property price. Higher yield usually means better rental income return."),
+        ("House yield", "Annual rent from the SA rental bond house median divided by the latest property price. Higher yield usually means better rental income return."),
         ("Risk score", "A combined model score using market, crime, economic, prediction, and growth signals. Lower is safer."),
         ("Market risk", "Risk from price level, growth pattern, volatility, and market movement."),
         ("Crime risk", "Risk based on recorded crime rates. It is not a full personal safety rating."),
         ("Economic risk", "Risk based on local income, employment, and education signals."),
-        ("Fair rent estimate", "An inflation-adjusted rent estimate using ABS Census 2021 rent as the baseline."),
-        ("Market rent estimate", "Estimated current rent after adjusting the baseline rent upward."),
-        ("Rent above fair", "How far the market rent estimate is above the fair-rent estimate. It is a model comparison, not a moral judgement."),
+        ("Fair baseline", "ABS Census 2021 rent adjusted upward by 30% inflation."),
+        ("Bond market rent", "Observed median weekly rent from SA private rental bond reports."),
+        ("Market premium", "How far rental bond market rent is above or below the fair baseline."),
         ("Affordability category", "How stressful rent looks compared with income. Severe crisis means rent is high relative to income."),
         ("Model price gap", "Latest price compared with the model's predicted/fair price. Negative means actual is above the model estimate."),
         ("Fairly valued", "The actual price is close enough to the model estimate that it is not strongly overvalued or undervalued."),
