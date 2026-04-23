@@ -2,13 +2,14 @@
 
 **[Data Analysis Repo](https://github.com/mussaussie/adelaide-property-market-analysis)**
 
-Presentation-focused Streamlit dashboard exploring **414 Adelaide suburbs** with 7 years of property data (Q1 2019 - Q4 2025). The deployment entry point is `app_presentation.py`.
-Dashboard link :- https://sapropertyinsights.com/
+Presentation-focused Streamlit dashboard exploring **414 Adelaide suburbs** with property data from **Q1 2019 to Q1 2026**. The deployment entry point is `app_presentation.py`.
+
+Dashboard link: https://sapropertyinsights.com/
 
 ## Features
 
 - **Overview** - Quick-search suburb rankings, executive snapshot, risk-return landscape
-- **Explore Suburb** - Price history, predicted 2026 values, risk, rent, crime, and community details
+- **Explore Suburb** - Price history, next-year forecast, risk, rent, crime, and community details
 - **Compare Suburbs** - Side-by-side suburb comparison across key investment metrics
 - **Opportunity Finder** - Filtered shortlist for growth, yield, risk, and affordability signals
 - **Map Lab** - Interactive suburb map with switchable metrics
@@ -16,7 +17,7 @@ Dashboard link :- https://sapropertyinsights.com/
 - **Demographics** - Population, median age, household income, mortgage data (ABS Census 2021)
 - **Crime & Safety** - Total crime counts, property vs person crimes, crime rate per 1,000 residents, top offense types
 - **Rental & Yield** - Fair vs actual rent, house/unit yields, affordability categories, greediness gap
-- **Predictions & Risk** - ML-predicted prices (Ridge Regression), predicted 2026 values, risk scores, investment strategies
+- **Predictions & Risk** - ML-predicted latest prices (Ridge Regression), next-year forecast values, risk scores, investment strategies
 - **Cultural Communities** - Indian, Chinese, Vietnamese, Italian, Greek populations with diversity index
 - **PDF & DOCX Reports** - Downloadable suburb-level reports
 - **Methodology & Glossary** - Plain-English notes for non-technical users
@@ -25,10 +26,22 @@ Dashboard link :- https://sapropertyinsights.com/
 
 | Source | Period | Description |
 |--------|--------|-------------|
-| SA Property Sales | Q1 2019 - Q4 2025 | 28 quarters, 414 suburbs, median prices |
+| SA Property Sales | Q1 2019 - Q1 2026 | 29 quarters, 414 suburbs, median prices |
 | ABS Census 2021 | 2021 | Demographics, income, rent, household data |
-| SA Government Crime | FY 2019-20 to Q1 2025-26 | Crime counts by type and suburb |
-| ML Predictions | 2025-2026 | Ridge Regression model (3 scenarios) |
+| SA Government Crime | FY 2019-20 to Q2 2025-26 | Crime counts by type and suburb |
+| ML Predictions | Latest property snapshot plus next-year forecast | Ridge Regression model (3 scenarios) |
+
+## Latest Data Refresh
+
+Latest copied outputs were refreshed on **23 April 2026** from the analysis project.
+
+- Latest property quarter included: **Q1 2026**
+- Latest crime data included: **Q2 2025-26**, covering records through **31 December 2025**
+- Main dashboard dataset: `data/clean/master_dataset_by_suburb.csv`
+- Property time series: `data/clean/property_timeseries_2019_2025.csv`
+- Prediction output: `data/predictions/price_predictions_2025_2026.csv`
+
+Some filenames still contain `2025` or `2025_2026` because the Streamlit app expects those paths. The file contents are the refreshed latest outputs.
 
 ## Tech Stack
 
@@ -79,21 +92,21 @@ adelaide-property-dashboard/
 └── data/
     ├── clean/
     │   ├── master_dataset_by_suburb.csv      # 414 suburbs, 1093 features
-    │   └── property_timeseries_2019_2025.csv # Quarterly price history
+    │   └── property_timeseries_2019_2025.csv # Quarterly price history through Q1 2026
     ├── predictions/
-    │   └── price_predictions_2025_2026.csv   # ML model predictions
+    │   └── price_predictions_2025_2026.csv   # Refreshed ML predictions and forecast fields
     ├── risk_analysis/
     │   └── complete_risk_analysis.csv        # Investment risk scores
     ├── rental/
     │   └── complete_rental_analysis.csv      # Rental yield analysis
     ├── demographics/
     │   └── cultural_demographics.csv         # Cultural community data
-    └── suburb_crime_offense_analysis.csv     # Top crime types per suburb
+    └── suburb_crime_offense_analysis.csv     # Top crime types per suburb through Q2 2025-26
 ```
 
 ## Disclaimer
 
-Demographics and rental data are from **ABS Census 2021** (most recent available). Crime data covers SA Government records through **Q1 2025-26**. Property prices span **Q1 2019 - Q4 2025**. Rental figures are inflation-adjusted estimates. This dashboard is for informational purposes only and does not constitute financial advice.
+Demographics and rental data are from **ABS Census 2021** (most recent available). Crime data covers SA Government records through **Q2 2025-26**. Property prices span **Q1 2019 - Q1 2026**. Rental figures are inflation-adjusted estimates. This dashboard is for informational purposes only and does not constitute financial advice.
 
 ## Author
 

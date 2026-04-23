@@ -134,13 +134,31 @@ CRIME_COLS = ["Suburb", "No_of_Crimes", "Crime_Type_1", "Crime_Type_2", "Crime_T
 TS_COLS = ["Suburb", "Median_Price", "Period", "Quarter", "Year"]
 
 METRIC_OPTIONS = {
-    "Current price": ("Current_Price_2025", "Price", "price"),
-    "7-year growth": ("Price_Growth_Percent", "Growth %", "growth"),
-    "Predicted growth": ("Expected_Growth_2026", "Predicted %", "growth"),
+    "Latest price": ("Current_Price_2025", "Price", "price"),
+    "29-quarter growth": ("Price_Growth_Percent", "Growth %", "growth"),
+    "Next-year growth": ("Expected_Growth_2026", "Growth %", "growth"),
     "Risk score": ("Total_Risk_Score", "Risk", "risk"),
     "House yield": ("Actual_House_Yield", "Yield %", "yield"),
     "Crime rate": ("Crime_Rate_Per_1000", "Crime / 1k", "risk"),
     "Cultural diversity": ("Cultural_Diversity_Index", "Diversity", "diversity"),
+}
+
+DISPLAY_COLUMN_LABELS = {
+    "Current_Price_2025": "Latest Price",
+    "Actual_Price_2025": "Latest Price",
+    "Predicted_Price_2025": "Predicted Latest Price",
+    "Forecast_Price_2026": "Next-Year Forecast",
+    "Forecast_2026_Lower": "Next-Year Forecast Lower",
+    "Forecast_2026_Upper": "Next-Year Forecast Upper",
+    "Price_Growth_Percent": "Q1 2019 to Q1 2026 Growth",
+    "Expected_Growth_2026": "Next-Year Growth",
+    "Actual_House_Yield": "House Yield",
+    "Crime_Rate_Per_1000": "Crime / 1k",
+    "Total_Risk_Category": "Risk Category",
+    "Total_Risk_Score": "Risk Score",
+    "Opportunity_Score": "Opportunity Score",
+    "Investment_Strategy": "Investment Strategy",
+    "G02_Median_tot_hhd_inc_weekly": "Median Household Income / Week",
 }
 
 PALETTES = {
@@ -836,27 +854,27 @@ def make_price_history(ts: pd.DataFrame, suburbs: list[str], forecast_df: pd.Dat
             if not pd.isna(record.get("Forecast_Price_2026")):
                 fig.add_trace(
                     go.Scatter(
-                        x=["2026 Prediction"],
+                        x=["Next-Year Forecast"],
                         y=[record["Forecast_Price_2026"]],
                         mode="markers",
-                        name="2026 prediction",
+                        name="Next-year forecast",
                         marker=dict(size=13, color="#c94e3f", symbol="diamond"),
-                        hovertemplate="2026 prediction<br>%{y:$,.0f}<extra></extra>",
+                        hovertemplate="Next-year forecast<br>%{y:$,.0f}<extra></extra>",
                     )
                 )
                 if not pd.isna(record.get("Forecast_2026_Lower")) and not pd.isna(record.get("Forecast_2026_Upper")):
                     fig.add_trace(
                         go.Scatter(
-                            x=["2026 Prediction", "2026 Prediction"],
+                            x=["Next-Year Forecast", "Next-Year Forecast"],
                             y=[record["Forecast_2026_Lower"], record["Forecast_2026_Upper"]],
                             mode="lines",
-                            name="prediction range",
+                            name="Forecast range",
                             line=dict(color="#c94e3f", width=8),
-                            hovertemplate="Prediction range<br>%{y:$,.0f}<extra></extra>",
+                            hovertemplate="Forecast range<br>%{y:$,.0f}<extra></extra>",
                         )
                     )
 
-    fig.update_layout(title="Price history and 2026 prediction", yaxis_title="Median price", xaxis_title="")
+    fig.update_layout(title="Price history and next-year forecast", yaxis_title="Median price", xaxis_title="")
     fig.update_yaxes(tickprefix="$", tickformat=",.0f")
     return apply_chart_style(fig, height=430)
 
@@ -968,6 +986,7 @@ def risk_return_scatter(data: pd.DataFrame) -> go.Figure:
             "Expected_Growth_2026": ":.1f",
             "Actual_House_Yield": ":.1f" if "Actual_House_Yield" in plot.columns else False,
         },
+        labels=DISPLAY_COLUMN_LABELS,
         color_discrete_sequence=["#176b5b", "#285f96", "#c94e3f", "#a87922", "#5b6573"],
     )
     fig.add_hline(y=plot["Expected_Growth_2026"].median(), line_dash="dot", line_color="#9aa4ad")
@@ -975,7 +994,7 @@ def risk_return_scatter(data: pd.DataFrame) -> go.Figure:
     fig.update_layout(
         title="Risk-return landscape",
         xaxis_title="Total risk score",
-        yaxis_title="Expected 2026 growth",
+        yaxis_title="Expected next-year growth",
     )
     fig.update_yaxes(ticksuffix="%")
     return apply_chart_style(fig, height=520)
@@ -1078,7 +1097,7 @@ def price_distribution(data: pd.DataFrame) -> go.Figure:
         nbins=26,
         color_discrete_sequence=["#176b5b"],
     )
-    fig.update_layout(title="2025 price distribution", xaxis_title="Current price", yaxis_title="Suburbs")
+    fig.update_layout(title="Latest price distribution", xaxis_title="Latest price", yaxis_title="Suburbs")
     fig.update_xaxes(tickprefix="$", tickformat=",.0f")
     return apply_chart_style(fig, height=360)
 
@@ -1103,7 +1122,7 @@ def format_dashboard_table(table: pd.DataFrame) -> pd.DataFrame:
             out[col] = out[col].apply(fmt_pct)
         elif "Score" in col or "Rate" in col:
             out[col] = out[col].apply(lambda value: fmt_num(value, 1))
-    return out
+    return out.rename(columns=DISPLAY_COLUMN_LABELS)
 
 
 def color_for_value(value: float, values: pd.Series, palette_name: str) -> str:
@@ -1282,9 +1301,9 @@ def generate_insight_pdf(suburb: str, row: pd.Series, ts: pd.DataFrame) -> bytes
     pdf.set_text_color(24, 34, 47)
     pdf.set_font("Helvetica", "B", 12)
     pdf.cell(0, 8, "Key insights", new_x=XPos.LMARGIN, new_y=YPos.NEXT)
-    pdf_metric(pdf, "Current price", fmt_price(row.get("Current_Price_2025")))
-    pdf_metric(pdf, "Predicted 2026", fmt_price(row.get("Forecast_Price_2026")))
-    pdf_metric(pdf, "Predicted growth", fmt_pct(row.get("Expected_Growth_2026")))
+    pdf_metric(pdf, "Latest price", fmt_price(row.get("Current_Price_2025")))
+    pdf_metric(pdf, "Next-Year Forecast", fmt_price(row.get("Forecast_Price_2026")))
+    pdf_metric(pdf, "Next-year growth", fmt_pct(row.get("Expected_Growth_2026")))
     pdf_metric(pdf, "Strategy", str(row.get("Investment_Strategy", "N/A")))
     pdf_metric(pdf, "Risk verdict", risk_plain_language(row))
     pdf_metric(pdf, "Rental verdict", rent_plain_language(row))
@@ -1295,7 +1314,7 @@ def generate_insight_pdf(suburb: str, row: pd.Series, ts: pd.DataFrame) -> bytes
     pdf.set_font("Helvetica", "I", 8)
     pdf.cell(0, 6, "Risk bars: shorter is safer. Growth/yield bars: longer is stronger.", new_x=XPos.LMARGIN, new_y=YPos.NEXT)
     pdf_bar(pdf, "Risk score", row.get("Total_Risk_Score"), 100, (201, 78, 63))
-    pdf_bar(pdf, "Predicted growth", row.get("Expected_Growth_2026"), 100, (23, 107, 91))
+    pdf_bar(pdf, "Next-year growth", row.get("Expected_Growth_2026"), 100, (23, 107, 91))
     pdf_bar(pdf, "House yield", row.get("Actual_House_Yield"), 8, (168, 121, 34))
     pdf_bar(pdf, "Crime / 1k", row.get("Crime_Rate_Per_1000"), 500, (40, 95, 150))
     pdf.ln(3)
@@ -1328,7 +1347,7 @@ def generate_insight_pdf(suburb: str, row: pd.Series, ts: pd.DataFrame) -> bytes
         plain_text(
             "Notes: ABS Census 2021 is used for demographics, income, mortgage, and baseline rent. "
             "Rental values are estimates adjusted from that baseline. Crime statistics cover FY 2019-20 "
-            "through Q1 2025-26. Model outputs are decision support, not financial advice."
+            "through Q2 2025-26, including records through 31 December 2025. Model outputs are decision support, not financial advice."
         ),
     )
     return bytes(pdf.output())
@@ -1341,9 +1360,9 @@ def generate_insight_docx(suburb: str, row: pd.Series, ts: pd.DataFrame) -> byte
 
     doc.add_heading("Key insights", level=1)
     for label, value in [
-        ("Current price", fmt_price(row.get("Current_Price_2025"))),
-        ("Predicted 2026", fmt_price(row.get("Forecast_Price_2026"))),
-        ("Predicted growth", fmt_pct(row.get("Expected_Growth_2026"))),
+        ("Latest price", fmt_price(row.get("Current_Price_2025"))),
+        ("Next-Year Forecast", fmt_price(row.get("Forecast_Price_2026"))),
+        ("Next-year growth", fmt_pct(row.get("Expected_Growth_2026"))),
         ("Strategy", str(row.get("Investment_Strategy", "N/A"))),
         ("Risk verdict", risk_plain_language(row)),
         ("Rental verdict", rent_plain_language(row)),
@@ -1361,7 +1380,7 @@ def generate_insight_docx(suburb: str, row: pd.Series, ts: pd.DataFrame) -> byte
     hdr[2].text = "Visual bar"
     for label, value, max_value in [
         ("Risk score", row.get("Total_Risk_Score"), 100),
-        ("Predicted growth", row.get("Expected_Growth_2026"), 100),
+        ("Next-year growth", row.get("Expected_Growth_2026"), 100),
         ("House yield", row.get("Actual_House_Yield"), 8),
         ("Crime / 1k", row.get("Crime_Rate_Per_1000"), 500),
     ]:
@@ -1395,7 +1414,7 @@ def generate_insight_docx(suburb: str, row: pd.Series, ts: pd.DataFrame) -> byte
     doc.add_paragraph(
         "ABS Census 2021 is used for demographics, income, mortgage, and baseline rent. "
         "Rental values are estimates adjusted from that baseline. Crime statistics cover FY 2019-20 "
-        "through Q1 2025-26. Model outputs are decision support, not financial advice."
+        "through Q2 2025-26, including records through 31 December 2025. Model outputs are decision support, not financial advice."
     )
 
     buffer = io.BytesIO()
@@ -1427,7 +1446,7 @@ def render_rank_cards(data: pd.DataFrame, top_n: int = 5, grid_cols: int = 1) ->
     for idx, (_, row) in enumerate(ranked.iterrows()):
         pills = [
             f'<span class="pill teal">{fmt_price(row.get("Current_Price_2025"))}</span>',
-            f'<span class="pill">{fmt_pct(row.get("Expected_Growth_2026"))} predicted growth</span>',
+            f'<span class="pill">{fmt_pct(row.get("Expected_Growth_2026"))} next-year growth</span>',
             f'<span class="pill amber">{fmt_pct(row.get("Actual_House_Yield"))} yield</span>',
             f'<span class="pill coral">{safe_text(row.get("Total_Risk_Category", "N/A"))}</span>',
         ]
@@ -1451,14 +1470,14 @@ def render_overview(df: pd.DataFrame, ts: pd.DataFrame, view: pd.DataFrame) -> N
     valid = view[view["Current_Price_2025"].notna()].copy()
     title_block(
         "Adelaide Property Decision Dashboard",
-        "A polished view of price history, ML predictions, rental yield, suburb risk, safety, and demographics.",
+        "Updated 23 April 2026 with 414 suburbs, 29 property quarters, Q1 2026 latest property prices, and crime records through 31 December 2025.",
     )
 
     c1, c2, c3, c4, c5 = st.columns(5)
     c1.markdown(card("Suburbs loaded", fmt_num(len(df)), "Full master dataset", "teal"), unsafe_allow_html=True)
-    c2.markdown(card("Full-price suburbs", fmt_num(valid["Current_Price_2025"].notna().sum()), "Usable 2025 price", "blue"), unsafe_allow_html=True)
+    c2.markdown(card("Full-price suburbs", fmt_num(valid["Current_Price_2025"].notna().sum()), "Latest price available", "blue"), unsafe_allow_html=True)
     c3.markdown(card("Median price", fmt_price(valid["Current_Price_2025"].median()), "Across active filters", "amber"), unsafe_allow_html=True)
-    c4.markdown(card("Median 7-year growth", fmt_pct(valid["Price_Growth_Percent"].median()), "2019 to 2025", "teal"), unsafe_allow_html=True)
+    c4.markdown(card("Median 29-quarter growth", fmt_pct(valid["Price_Growth_Percent"].median()), "Q1 2019 to Q1 2026", "teal"), unsafe_allow_html=True)
     c5.markdown(card("Median risk score", fmt_num(valid["Total_Risk_Score"].median(), 1), "Lower is safer", "coral"), unsafe_allow_html=True)
 
     section("Quick searches", "Click once to surface common suburb lists.")
@@ -1467,8 +1486,8 @@ def render_overview(df: pd.DataFrame, ts: pd.DataFrame, view: pd.DataFrame) -> N
 
     actions = [
         ("Best opportunities", "Opportunity_Score", False, "Investment shortlist"),
-        ("Most growing", "Price_Growth_Percent", False, "Highest 2019-2025 growth"),
-        ("Highest predicted growth", "Expected_Growth_2026", False, "Highest 2026 model growth"),
+        ("Most growing", "Price_Growth_Percent", False, "Highest Q1 2019 to Q1 2026 growth"),
+        ("Highest next-year growth", "Expected_Growth_2026", False, "Highest next-year model growth"),
         ("Best yield", "Actual_House_Yield", False, "Highest estimated house yield"),
         ("Lowest risk", "Total_Risk_Score", True, "Lowest total risk score"),
         ("Highest crime", "Crime_Rate_Per_1000", False, "Highest crimes per 1,000 people"),
@@ -1504,7 +1523,7 @@ def render_overview(df: pd.DataFrame, ts: pd.DataFrame, view: pd.DataFrame) -> N
     section("Executive snapshot", "The first screen emphasizes investable signals instead of raw tables.")
     render_rank_cards(valid, 6, grid_cols=3)
 
-    section("Risk-return landscape", "Bubble size represents 2025 price; position shows risk versus expected 2026 growth.")
+    section("Risk-return landscape", "Bubble size represents latest price; position shows risk versus expected next-year growth.")
     st.plotly_chart(risk_return_scatter(valid), use_container_width=True)
 
     left, right = st.columns([1, 1])
@@ -1538,10 +1557,10 @@ def render_explore(df: pd.DataFrame, ts: pd.DataFrame, suburb: str) -> None:
     st.markdown(
         f"""
         <div class="insight-box">
-            <strong>Positioning:</strong> {safe_text(suburb)} is currently priced at
+            <strong>Positioning:</strong> {safe_text(suburb)} has a latest price of
             <strong>{fmt_price(row.get("Current_Price_2025"))}</strong>, with
-            <strong>{fmt_pct(row.get("Price_Growth_Percent"))}</strong> growth since 2019 and
-            a 2026 prediction of <strong>{fmt_price(row.get("Forecast_Price_2026"))}</strong>.
+            <strong>{fmt_pct(row.get("Price_Growth_Percent"))}</strong> growth from Q1 2019 to Q1 2026 and
+            a next-year forecast of <strong>{fmt_price(row.get("Forecast_Price_2026"))}</strong>.
             The model classifies it as <strong>{risk}</strong> with strategy:
             <strong>{strategy}</strong>.
         </div>
@@ -1550,13 +1569,13 @@ def render_explore(df: pd.DataFrame, ts: pd.DataFrame, suburb: str) -> None:
     )
 
     c1, c2, c3, c4 = st.columns(4)
-    c1.markdown(card("Current price", fmt_price(row.get("Current_Price_2025")), "2025 median", "teal"), unsafe_allow_html=True)
-    c2.markdown(card("Predicted 2026", fmt_price(row.get("Forecast_Price_2026")), fmt_pct(row.get("Expected_Growth_2026")), "blue"), unsafe_allow_html=True)
+    c1.markdown(card("Latest price", fmt_price(row.get("Current_Price_2025")), "Q1 2026 median", "teal"), unsafe_allow_html=True)
+    c2.markdown(card("Next-Year Forecast", fmt_price(row.get("Forecast_Price_2026")), fmt_pct(row.get("Expected_Growth_2026")), "blue"), unsafe_allow_html=True)
     c3.markdown(card("House yield", fmt_pct(row.get("Actual_House_Yield")), safe_text(row.get("Affordability_Category", "N/A")), "amber"), unsafe_allow_html=True)
     c4.markdown(card("Risk score", fmt_num(row.get("Total_Risk_Score"), 1), safe_text(row.get("Total_Risk_Category", "N/A")), "coral"), unsafe_allow_html=True)
 
     tab_growth, tab_risk, tab_crime, tab_people, tab_download = st.tabs([
-        "Growth and prediction",
+        "Growth and forecast",
         "Risk and rental",
         "Crime insights",
         "People and community",
@@ -1595,11 +1614,11 @@ def render_explore(df: pd.DataFrame, ts: pd.DataFrame, suburb: str) -> None:
         subcols[0].markdown(card("Price volatility", fmt_num(row.get("Price_Volatility"), 0), "Std deviation", "blue"), unsafe_allow_html=True)
         gap_value, gap_note = value_gap_note(row.get("Value_Gap_Percent"), row.get("Value_Category", "N/A"))
         subcols[1].markdown(card("Model price gap", gap_value, gap_note, "teal"), unsafe_allow_html=True)
-        subcols[2].markdown(card("Prediction error", fmt_pct(row.get("Error_Percent")), "2025 model check", "amber"), unsafe_allow_html=True)
+        subcols[2].markdown(card("Prediction error", fmt_pct(row.get("Error_Percent")), "Latest model check", "amber"), unsafe_allow_html=True)
         st.markdown(
             """
             <div class="note-box">
-                Model price gap compares the actual 2025 price with the model's predicted/fair price.
+                Model price gap compares the latest price with the model's predicted/fair price.
                 Negative means the actual price is above the model estimate; positive means it is below the model estimate.
                 Small negative or positive gaps can still be classified as fairly valued.
             </div>
@@ -1702,8 +1721,8 @@ def render_explore(df: pd.DataFrame, ts: pd.DataFrame, suburb: str) -> None:
             """
             <div class="note-box">
                 Crime Data Note: Crime statistics cover SA Government records from FY 2019-20 through
-                Q1 2025-26. Counts are cumulative across reporting periods, and crime rate per 1,000 people
-                helps compare suburbs with different population sizes.
+                Q2 2025-26, including records through 31 December 2025. Counts are cumulative across reporting
+                periods, and crime rate per 1,000 people helps compare suburbs with different population sizes.
             </div>
             """,
             unsafe_allow_html=True,
@@ -1787,7 +1806,7 @@ def render_explore(df: pd.DataFrame, ts: pd.DataFrame, suburb: str) -> None:
 def render_compare(df: pd.DataFrame, ts: pd.DataFrame, suburbs: list[str]) -> None:
     title_block(
         "Compare suburbs",
-        "Compare price paths, prediction, risk, rent, safety, and demographics side by side.",
+        "Compare price paths, next-year forecast, risk, rent, safety, and demographics side by side.",
         "Comparison workflow",
     )
     if not suburbs:
@@ -1817,6 +1836,7 @@ def render_compare(df: pd.DataFrame, ts: pd.DataFrame, suburbs: list[str]) -> No
             if col in selected.columns
         ]
     ].melt(id_vars="Suburb", var_name="Metric", value_name="Value")
+    long_metrics["Metric"] = long_metrics["Metric"].map(DISPLAY_COLUMN_LABELS).fillna(long_metrics["Metric"])
     fig = px.bar(long_metrics, x="Suburb", y="Value", color="Metric", barmode="group", color_discrete_sequence=["#176b5b", "#285f96", "#c94e3f", "#a87922"])
     fig.update_layout(title="Signal comparison", xaxis_title="", yaxis_title="Score / percent")
     st.plotly_chart(apply_chart_style(fig, 430), use_container_width=True)
@@ -1825,7 +1845,7 @@ def render_compare(df: pd.DataFrame, ts: pd.DataFrame, suburbs: list[str]) -> No
 def render_opportunities(df: pd.DataFrame) -> None:
     title_block(
         "Opportunity finder",
-        "Rank suburbs using model score, risk, predicted growth, rental yield, and affordability.",
+        "Rank suburbs using model score, risk, next-year growth, rental yield, and affordability.",
         "Decision workflow",
     )
     valid = df[df["Current_Price_2025"].notna()].copy()
@@ -1833,8 +1853,8 @@ def render_opportunities(df: pd.DataFrame) -> None:
         """
         <div class="note-box">
             <strong>How to use this:</strong> set the maximum price you can afford, then choose the minimum
-            future growth and rental yield you want. Predicted growth is the model's expected 2026 price increase.
-            House yield is estimated yearly rent divided by the 2025 property price, so higher usually means
+            future growth and rental yield you want. Next-year growth is the model's expected price increase.
+            House yield is estimated yearly rent divided by the latest property price, so higher usually means
             better rental return.
         </div>
         """,
@@ -1844,10 +1864,10 @@ def render_opportunities(df: pd.DataFrame) -> None:
         controls = st.columns([1, 1, 1, 0.8])
         max_budget = controls[0].number_input("Maximum budget", min_value=0, value=1_200_000, step=50_000)
         min_growth = controls[1].number_input(
-            "Minimum predicted growth %",
+            "Minimum next-year growth %",
             value=0.0,
             step=1.0,
-            help="Only show suburbs where the model expects at least this much price growth by 2026.",
+            help="Only show suburbs where the model expects at least this much next-year price growth.",
         )
         min_yield = controls[2].number_input(
             "Minimum house yield %",
@@ -1857,7 +1877,7 @@ def render_opportunities(df: pd.DataFrame) -> None:
         )
         hide_high_risk = controls[3].toggle("Hide high risk", value=True)
         st.caption(
-            "Example: 5% predicted growth means the model expects the price to rise by at least 5%. "
+            "Example: 5% next-year growth means the model expects the price to rise by at least 5%. "
             "A 3.5% house yield means annual rent is about 3.5% of the property price."
         )
 
@@ -1872,7 +1892,7 @@ def render_opportunities(df: pd.DataFrame) -> None:
     c1, c2, c3, c4 = st.columns(4)
     c1.markdown(card("Matches", fmt_num(len(filtered)), "After filters", "teal"), unsafe_allow_html=True)
     c2.markdown(card("Median price", fmt_price(filtered["Current_Price_2025"].median()), "Filtered suburbs", "blue"), unsafe_allow_html=True)
-    c3.markdown(card("Median predicted growth", fmt_pct(filtered["Expected_Growth_2026"].median()), "2026 model growth", "amber"), unsafe_allow_html=True)
+    c3.markdown(card("Median next-year growth", fmt_pct(filtered["Expected_Growth_2026"].median()), "Model expectation", "amber"), unsafe_allow_html=True)
     c4.markdown(card("Median yield", fmt_pct(filtered["Actual_House_Yield"].median()), "House yield", "coral"), unsafe_allow_html=True)
 
     section("Best matches")
@@ -1942,7 +1962,7 @@ def render_map_lab(df: pd.DataFrame, ts: pd.DataFrame, geojson: dict | None, coo
                 f"""
                 <div class="insight-box">
                     <strong>{safe_text(selected)}</strong><br>
-                    Price: <strong>{fmt_price(row.get("Current_Price_2025"))}</strong> |
+                    Latest price: <strong>{fmt_price(row.get("Current_Price_2025"))}</strong> |
                     Growth: <strong>{fmt_pct(row.get("Price_Growth_Percent"))}</strong> |
                     Risk: <strong>{safe_text(row.get("Total_Risk_Category", "N/A"))}</strong><br>
                     Strategy: <strong>{safe_text(row.get("Investment_Strategy", "N/A"))}</strong>
@@ -1951,7 +1971,7 @@ def render_map_lab(df: pd.DataFrame, ts: pd.DataFrame, geojson: dict | None, coo
                 unsafe_allow_html=True,
             )
             c1, c2, c3 = st.columns(3)
-            c1.markdown(card("Predicted 2026", fmt_price(row.get("Forecast_Price_2026")), fmt_pct(row.get("Expected_Growth_2026")), "blue"), unsafe_allow_html=True)
+            c1.markdown(card("Next-Year Forecast", fmt_price(row.get("Forecast_Price_2026")), fmt_pct(row.get("Expected_Growth_2026")), "blue"), unsafe_allow_html=True)
             c2.markdown(card("Yield", fmt_pct(row.get("Actual_House_Yield")), safe_text(row.get("Affordability_Category", "N/A")), "amber"), unsafe_allow_html=True)
             c3.markdown(card("Crime / 1k", fmt_num(row.get("Crime_Rate_Per_1000"), 1), safe_text(row.get("Crime_Risk_Category", "N/A")), "coral"), unsafe_allow_html=True)
         else:
@@ -1972,17 +1992,18 @@ def render_methodology(df: pd.DataFrame, ts: pd.DataFrame) -> None:
     )
     c1, c2, c3, c4 = st.columns(4)
     c1.markdown(card("Master suburbs", fmt_num(len(df)), "Base analysis rows", "teal"), unsafe_allow_html=True)
-    c2.markdown(card("Time series rows", fmt_num(len(ts)), "Quarterly price records", "blue"), unsafe_allow_html=True)
+    c2.markdown(card("Time series rows", fmt_num(len(ts)), "29 property quarters", "blue"), unsafe_allow_html=True)
     c3.markdown(card("Prediction rows", fmt_num(df["Predicted_Price_2025"].notna().sum()), "Suburbs with ML output", "amber"), unsafe_allow_html=True)
     c4.markdown(card("Rental rows", fmt_num(df["Actual_House_Yield"].notna().sum()), "Suburbs with rental analysis", "coral"), unsafe_allow_html=True)
 
     st.markdown(
         """
         <div class="note-box">
-            Property prices cover Q1 2019 to Q4 2025. Demographics and rental inputs are based on ABS Census 2021
-            and rental figures are inflation-adjusted estimates. Crime statistics cover SA Government records from
-            FY 2019-20 through Q1 2025-26. The 2026 prediction and risk outputs are model outputs from the analysis
-            project and should be treated as decision support, not financial advice.
+            Latest refresh: 23 April 2026. Property prices cover Q1 2019 to Q1 2026 across 29 quarters.
+            Demographics and rental inputs are based on ABS Census 2021, and rental figures are inflation-adjusted
+            estimates. Crime statistics cover SA Government records from FY 2019-20 through Q2 2025-26, including
+            records through 31 December 2025. The next-year forecast and risk outputs are model outputs from the
+            analysis project and should be treated as decision support, not financial advice.
         </div>
         """,
         unsafe_allow_html=True,
@@ -1992,7 +2013,7 @@ def render_methodology(df: pd.DataFrame, ts: pd.DataFrame) -> None:
     coverage = pd.DataFrame(
         {
             "Output area": [
-                "Current 2025 price",
+                "Latest price",
                 "Prediction and risk",
                 "Rental and yield",
                 "Cultural demographics",
@@ -2019,8 +2040,8 @@ def render_glossary() -> None:
         "Help",
     )
     terms = [
-        ("Current price", "The suburb's 2025 median property price from the processed property sales data."),
-        ("Predicted growth", "The model's expected percentage price increase by 2026. It is a prediction, not a guarantee."),
+        ("Latest price", "The suburb's latest median property price from the processed property sales data, with Q1 2026 as the latest property quarter."),
+        ("Next-year growth", "The model's expected percentage price increase over the next-year forecast period. It is a prediction, not a guarantee."),
         ("House yield", "Estimated yearly rent divided by property price. Higher yield usually means better rental income return."),
         ("Risk score", "A combined model score using market, crime, economic, prediction, and growth signals. Lower is safer."),
         ("Market risk", "Risk from price level, growth pattern, volatility, and market movement."),
@@ -2030,12 +2051,12 @@ def render_glossary() -> None:
         ("Market rent estimate", "Estimated current rent after adjusting the baseline rent upward."),
         ("Rent above fair", "How far the market rent estimate is above the fair-rent estimate. It is a model comparison, not a moral judgement."),
         ("Affordability category", "How stressful rent looks compared with income. Severe crisis means rent is high relative to income."),
-        ("Model price gap", "Actual 2025 price compared with the model's predicted/fair price. Negative means actual is above the model estimate."),
+        ("Model price gap", "Latest price compared with the model's predicted/fair price. Negative means actual is above the model estimate."),
         ("Fairly valued", "The actual price is close enough to the model estimate that it is not strongly overvalued or undervalued."),
         ("Opportunity score", "A ranking score combining growth, value, safety, yield, and risk. It helps shortlist suburbs."),
         ("Cultural diversity index", "A summary measure of cultural mix from Census 2021 community data. Higher means more diverse."),
         ("Crime / 1k", "Recorded crimes per 1,000 residents. This helps compare suburbs with different population sizes."),
-        ("Prediction error", "How far the model's 2025 prediction was from the actual 2025 price."),
+        ("Prediction error", "How far the model's predicted latest price was from the latest observed price."),
         ("Price volatility", "How much prices have moved around over time. Higher volatility means less stable price history."),
     ]
     left, right = st.columns([1, 1])
