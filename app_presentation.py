@@ -2211,6 +2211,23 @@ def render_glossary() -> None:
             right.markdown(html, unsafe_allow_html=True)
 
 
+def render_footer() -> None:
+    st.divider()
+    st.markdown(
+        """
+        <div style="padding: 0.35rem 0 1.25rem 0; font-size: 0.95rem; color: #5b6470;">
+            Created by <strong>Abdul Mussavir</strong> |
+            <a href="https://github.com/mussaussie/adelaide-property-market-analysis"
+               target="_blank"
+               style="color: #0f766e; text-decoration: none; font-weight: 600;">
+                Project repo
+            </a>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
 def main() -> None:
     df, ts = load_data()
     geojson = load_geojson()
@@ -2255,6 +2272,8 @@ def main() -> None:
         render_methodology(df, ts)
     else:
         render_glossary()
+
+    render_footer()
 
 
 if __name__ == "__main__":
