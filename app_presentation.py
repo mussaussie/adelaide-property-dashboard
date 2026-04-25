@@ -890,6 +890,7 @@ def apply_chart_style(fig: go.Figure, height: int = 390) -> go.Figure:
 def make_price_history(ts: pd.DataFrame, suburbs: list[str], forecast_df: pd.DataFrame | None = None) -> go.Figure:
     fig = go.Figure()
     palette = ["#176b5b", "#285f96", "#c94e3f", "#a87922", "#5b6573", "#8a5a2b"]
+    has_single_suburb_forecast = False
     for idx, suburb in enumerate(suburbs):
         sub_ts = ts[ts["Suburb"] == suburb].copy()
         if sub_ts.empty:
@@ -912,6 +913,7 @@ def make_price_history(ts: pd.DataFrame, suburbs: list[str], forecast_df: pd.Dat
         if not row.empty:
             record = row.iloc[0]
             if not pd.isna(record.get("Forecast_Price_2026")):
+                has_single_suburb_forecast = True
                 fig.add_trace(
                     go.Scatter(
                         x=["Next-Year Forecast"],
@@ -936,7 +938,21 @@ def make_price_history(ts: pd.DataFrame, suburbs: list[str], forecast_df: pd.Dat
 
     fig.update_layout(title="Price history and next-year forecast", yaxis_title="Median price", xaxis_title="")
     fig.update_yaxes(tickprefix="$", tickformat=",.0f")
-    return apply_chart_style(fig, height=430)
+    fig = apply_chart_style(fig, height=430)
+
+    if has_single_suburb_forecast:
+        fig.update_layout(
+            margin=dict(l=20, r=20, t=55, b=95),
+            legend=dict(
+                orientation="h",
+                yanchor="top",
+                y=-0.2,
+                xanchor="center",
+                x=0.5,
+            ),
+        )
+
+    return fig
 
 
 def annual_growth_data(ts: pd.DataFrame, suburb: str) -> pd.DataFrame:
