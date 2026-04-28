@@ -21,6 +21,7 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 import streamlit as st
+import streamlit.components.v1 as components
 from docx import Document
 from fpdf import FPDF, XPos, YPos
 from streamlit_folium import st_folium
@@ -212,6 +213,53 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="collapsed",
 )
+
+
+GA_MEASUREMENT_ID = "G-734GGG5EQ3"
+
+
+def inject_ga4(page_name: str) -> None:
+    page_title = f"SA Property Insights | {page_name}"
+    ga_html = f"""
+    <script>
+    (function() {{
+        const parentWindow = window.parent;
+        const documentHead = parentWindow.document.head;
+        const measurementId = "{GA_MEASUREMENT_ID}";
+        const pageName = {json.dumps(page_name)};
+        const pageTitle = {json.dumps(page_title)};
+        const sessionKey = "sa-property-insights-last-page";
+
+        if (!parentWindow.dataLayer) {{
+            parentWindow.dataLayer = [];
+        }}
+
+        parentWindow.gtag = parentWindow.gtag || function() {{
+            parentWindow.dataLayer.push(arguments);
+        }};
+
+        if (!documentHead.querySelector('script[data-ga4="{GA_MEASUREMENT_ID}"]')) {{
+            const gaScript = parentWindow.document.createElement("script");
+            gaScript.async = true;
+            gaScript.src = "https://www.googletagmanager.com/gtag/js?id=" + measurementId;
+            gaScript.setAttribute("data-ga4", measurementId);
+            documentHead.appendChild(gaScript);
+            parentWindow.gtag("js", new Date());
+        }}
+
+        const lastPage = parentWindow.sessionStorage.getItem(sessionKey);
+        if (lastPage !== pageName) {{
+            parentWindow.gtag("config", measurementId, {{
+                page_title: pageTitle,
+                page_path: "/" + pageName.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, ""),
+                page_location: parentWindow.location.href
+            }});
+            parentWindow.sessionStorage.setItem(sessionKey, pageName);
+        }}
+    }})();
+    </script>
+    """
+    components.html(ga_html, height=0, width=0)
 
 
 st.markdown(
@@ -2273,6 +2321,8 @@ def main() -> None:
 
         st.divider()
         st.caption("This file is separate from app.py and only reads existing CSV/GeoJSON outputs.")
+
+    inject_ga4(page)
 
     if page == "Overview":
         render_overview(df, ts, df)
