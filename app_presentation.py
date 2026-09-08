@@ -299,11 +299,16 @@ st.markdown(
     .stApp [data-testid="stWidgetLabel"],
     .stApp [data-testid="stWidgetLabel"] *,
     .stApp [data-testid="stText"],
+    .stApp [data-testid="stSelectbox"] label *,
+    .stApp [data-testid="stMultiSelect"] label *,
+    .stApp [data-testid="stNumberInput"] label *,
+    .stApp [data-testid="stToggle"] label *,
     .stApp [data-testid="stExpander"] summary,
     .stApp [data-testid="stExpander"] summary *,
     .stApp [data-baseweb="radio"] p,
     .stApp [data-baseweb="checkbox"] p,
-    .stApp [data-baseweb="tab"] p {
+    .stApp [data-baseweb="tab"],
+    .stApp [data-baseweb="tab"] * {
         color: var(--ink) !important;
     }
 
@@ -378,7 +383,7 @@ st.markdown(
     }
 
     .topbar p {
-        color: var(--muted);
+        color: var(--muted) !important;
         margin: 0.45rem 0 0 0;
         font-size: 1rem;
     }
@@ -391,7 +396,7 @@ st.markdown(
     }
 
     .section-subtitle {
-        color: var(--muted);
+        color: var(--muted) !important;
         font-size: 0.92rem;
         margin: -0.25rem 0 0.75rem 0;
     }
@@ -411,7 +416,7 @@ st.markdown(
     .metric-card.amber { border-top: 4px solid var(--amber); }
 
     .metric-label {
-        color: var(--muted);
+        color: var(--muted) !important;
         font-size: 0.74rem;
         font-weight: 800;
         text-transform: uppercase;
@@ -420,7 +425,7 @@ st.markdown(
     }
 
     .metric-value {
-        color: var(--ink);
+        color: var(--ink) !important;
         font-size: 1.62rem;
         line-height: 1.12;
         font-weight: 850;
@@ -429,13 +434,14 @@ st.markdown(
     }
 
     .metric-note {
-        color: var(--muted);
+        color: var(--muted) !important;
         font-size: 0.82rem;
         margin-top: 0.35rem;
         line-height: 1.3;
     }
 
     .insight-box {
+        color: var(--ink) !important;
         background: #ffffff;
         border: 1px solid var(--line);
         border-left: 5px solid var(--teal);
@@ -445,7 +451,7 @@ st.markdown(
     }
 
     .insight-box strong {
-        color: var(--ink);
+        color: var(--ink) !important;
     }
 
     .pill-row {
@@ -460,18 +466,19 @@ st.markdown(
         align-items: center;
         background: var(--soft-blue);
         border: 1px solid #c8d6e8;
-        color: #254864;
+        color: #254864 !important;
         border-radius: 999px;
         padding: 0.32rem 0.65rem;
         font-size: 0.8rem;
         font-weight: 750;
     }
 
-    .pill.teal { background: var(--soft-teal); border-color: #b9d6cd; color: var(--teal); }
-    .pill.coral { background: var(--soft-coral); border-color: #efc8bf; color: var(--coral); }
-    .pill.amber { background: var(--soft-amber); border-color: #e5cf9d; color: var(--amber); }
+    .pill.teal { background: var(--soft-teal); border-color: #b9d6cd; color: var(--teal) !important; }
+    .pill.coral { background: var(--soft-coral); border-color: #efc8bf; color: var(--coral) !important; }
+    .pill.amber { background: var(--soft-amber); border-color: #e5cf9d; color: var(--amber) !important; }
 
     .rank-card {
+        color: var(--ink) !important;
         background: #ffffff;
         border: 1px solid var(--line);
         border-radius: 8px;
@@ -488,12 +495,12 @@ st.markdown(
     }
 
     .rank-title strong {
-        color: var(--ink);
+        color: var(--ink) !important;
         font-size: 1.02rem;
     }
 
     .rank-score {
-        color: #ffffff;
+        color: #ffffff !important;
         background: var(--teal);
         border-radius: 999px;
         padding: 0.25rem 0.55rem;
@@ -503,14 +510,14 @@ st.markdown(
     }
 
     .rank-meta {
-        color: var(--muted);
+        color: var(--muted) !important;
         font-size: 0.83rem;
         margin-top: 0.35rem;
         line-height: 1.35;
     }
 
     .note-box {
-        color: #55471f;
+        color: #55471f !important;
         background: #fbf5e7;
         border: 1px solid #ead9ad;
         border-radius: 8px;
@@ -566,6 +573,7 @@ st.markdown(
     }
 
     .glossary-term {
+        color: var(--ink) !important;
         background: #ffffff;
         border: 1px solid var(--line);
         border-radius: 8px;
@@ -595,7 +603,7 @@ st.markdown(
     .stTabs [data-baseweb="tab"] {
         border-radius: 8px 8px 0 0;
         padding: 0.5rem 0.8rem;
-        color: var(--muted);
+        color: var(--muted) !important;
         font-weight: 750;
     }
 
@@ -604,6 +612,10 @@ st.markdown(
         background: #ffffff !important;
         border: 1px solid var(--line);
         border-bottom-color: #ffffff;
+    }
+
+    .stTabs [aria-selected="true"] * {
+        color: var(--teal) !important;
     }
 
     @media screen and (max-width: 900px) {
