@@ -286,6 +286,33 @@ st.markdown(
         color: var(--ink);
     }
 
+    .stApp h1,
+    .stApp h2,
+    .stApp h3,
+    .stApp h4,
+    .stApp h5,
+    .stApp h6,
+    .stApp p,
+    .stApp li,
+    .stApp label,
+    .stApp [data-testid="stMarkdownContainer"],
+    .stApp [data-testid="stWidgetLabel"],
+    .stApp [data-testid="stWidgetLabel"] *,
+    .stApp [data-testid="stText"],
+    .stApp [data-testid="stExpander"] summary,
+    .stApp [data-testid="stExpander"] summary *,
+    .stApp [data-baseweb="radio"] p,
+    .stApp [data-baseweb="checkbox"] p,
+    .stApp [data-baseweb="tab"] p {
+        color: var(--ink) !important;
+    }
+
+    .stApp [data-testid="stCaptionContainer"],
+    .stApp [data-testid="stCaptionContainer"] *,
+    .stApp small {
+        color: var(--muted) !important;
+    }
+
     html, body, [class*="css"] {
         font-family: Inter, Segoe UI, Roboto, Arial, sans-serif;
     }
@@ -504,6 +531,11 @@ st.markdown(
         font-weight: 850 !important;
         box-shadow: 0 10px 22px rgba(24, 34, 47, 0.18) !important;
         min-height: 2.8rem;
+    }
+
+    .stButton > button *,
+    .stDownloadButton > button * {
+        color: #ffffff !important;
     }
 
     .stButton > button:hover {
