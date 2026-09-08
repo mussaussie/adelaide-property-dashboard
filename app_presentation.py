@@ -295,6 +295,28 @@ st.markdown(
         border-right: 1px solid var(--line);
     }
 
+    section[data-testid="stSidebar"] h1,
+    section[data-testid="stSidebar"] h2,
+    section[data-testid="stSidebar"] h3,
+    section[data-testid="stSidebar"] p,
+    section[data-testid="stSidebar"] label,
+    section[data-testid="stSidebar"] [data-testid="stCaptionContainer"] {
+        color: var(--ink) !important;
+    }
+
+    section[data-testid="stSidebar"] [role="radiogroup"] label p {
+        color: var(--ink) !important;
+        font-weight: 650;
+    }
+
+    section[data-testid="stSidebar"] [data-baseweb="select"] span {
+        color: #ffffff !important;
+    }
+
+    section[data-testid="stSidebar"] [data-baseweb="select"] input {
+        color: #ffffff !important;
+    }
+
     .block-container {
         padding-top: 1.4rem;
         padding-bottom: 3rem;
